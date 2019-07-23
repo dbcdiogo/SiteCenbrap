@@ -1,0 +1,94 @@
+﻿@model SiteCenbrap.Models.InscrevaView
+@{
+    ViewBag.Title = "Matricule-se Agora";
+}
+
+<!-- Event snippet for Interesse Inscrição conversion page -->
+<script> gtag('event', 'conversion', { 'send_to': 'AW-985863459/u8oaCMD234kBEKOqjNYD' }); </script>
+
+<div class="row CursosSel">
+    <div class="container">
+        <div class="row">
+            <h2>Matricule-se agora</h2>
+        </div>
+        <div class="row column-number">
+            <div class="col-md-3 col-xs-12 hidden-xs"><span><label>1</label></span></div>
+            <div class="col-md-3 col-xs-12 hidden-xs"><span><label>2</label></span></div>
+            <div class="col-md-3 col-xs-12 hidden-xs"><span><label>3</label></span></div>
+            <div class="col-md-3 col-xs-12 hidden-xs"><span><label>4</label></span></div>
+        </div>
+        <div class="row columns">
+            <div class="col-md-3 col-xs-12 column" column-type="TipoCursos">
+                <ul>
+                    <li class="title">Tipo de Curso</li>
+                    <li value="0">Pós-Graduações</li>
+                    <li value="1">Workshops</li>
+                    <li value="2">EAD</li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-xs-12 column" column-type="Cidades">
+                <ul>         
+                    <li class="title">Cidade</li>
+                    @foreach (var c in Model.cidades)
+                    {
+                        if (@Model.cidade.codigo > 0)
+                        {
+                            if (@Model.cidade.cidade == @c.cidade)
+                            {
+                                <li value="@c.codigo" class="select-item"> @c.cidade @(@c.estado.Trim().Length > 0 ? " - " : "") @c.estado </li>
+                            }
+                        }
+                        else
+                        {
+                            <li value="@c.codigo"> @c.cidade @(@c.estado.Trim().Length > 0 ? " - " : "") @c.estado </li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="col-md-3 col-xs-12 column" column-type="Cursos">
+                <ul>
+                    <li class="title">Curso</li>
+                    @foreach (var t in Model.titulocurso)
+                    {
+                        if (@Model.curso.codigo > 0)
+                         {
+                             if (@Model.curso.codigo == @t.codigo)
+                             {
+                                 <li value="@t.codigo" class="select-item"> @t.titulo</li>
+                             }
+                         }
+                         else
+                         {
+                            <li value="@t.codigo"> @t.titulo</li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="col-md-3 col-xs-12 column" column-type="Turmas">
+                <ul>
+                    <li class="title">Turmas</li>
+                    @foreach (var u in Model.cursos)
+                    {
+                        <li value="@u.codigo" turma="@u.titulo1">
+                        @u.titulo<br />
+
+                            
+                                @if (u.ativo == 0)
+                                {
+                                    @: Me informe ao abrirem as matrículas <br />
+                            
+                        }
+                        @*<label onclick="showModal(@u.codigo, event)">Mais detalhes</label>*@
+                        </li>
+//                        <li value="@u.codigo"><span onclick="showModal(@u.codigo, event)" class="glyphicon glyphicon-plus" title="Veja mais sobre o curso"></span> @u.titulo</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Inscreva")
+}
+

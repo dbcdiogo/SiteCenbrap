@@ -1,0 +1,56 @@
+﻿@model SiteCenbrap.Models.DescadastrarView
+
+<form id="form-desc" name="form-desc" method="post">
+    <div class="container">
+        <div>
+            <br />
+            @if (Model.aluno == null)
+            {
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-lg-12">
+                        <h2>Link inválido</h2>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" id="idcampanha" name="idcampanha" value="@Model.campanha" />
+                <input type="hidden" id="idaluno" name="idaluno" value="@Model.aluno.codigo" />
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-lg-12">
+                        <h2>
+                            Aluno(a): <b>@Model.aluno.nome</b><br />
+                        </h2><br />
+                        <h4>Autorizo o envio dos seguintes e-mails:</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-lg-12">
+                        <br />
+                        <input onclick="marcaTudo(this.checked)" type="checkbox" id="mail_todos" name="mail_todos" @(Model.aluno.envio_email == 1 ? "checked" : "") value="1" />&nbsp;&nbsp;E-mails do CENBRAP, cursos livres e eventos.
+                    </div>
+                </div>
+                foreach (var p in Model.aluno_curso)
+                {
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-lg-12">
+                            <br />
+                            <input type="checkbox" id="chk_@p.codigo" name="chk_@p.codigo" @(p.envio_email == 1 ? "checked" : "") value="1" />&nbsp;&nbsp;@(Convert.ToInt32(p.curso.titulo1) == 0 ? "Pós-graduação em " + p.curso.titulo : p.curso.titulo)
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-lg-12 text-center">
+                        <button type="button" id="btn_enviar_descadastrar" class="btn btn-pos margin-top-50">GRAVAR</button>
+                    </div>
+                </div>
+                <div id="ContinuarErro" style="margin-top:30px;"></div>
+                <div class="clearfix"></div>
+            }
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Descadastrar")
+}

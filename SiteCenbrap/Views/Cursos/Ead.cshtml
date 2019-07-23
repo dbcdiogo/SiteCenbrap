@@ -1,0 +1,93 @@
+﻿@model SiteCenbrap.Models.EadView
+@{
+    ViewBag.Title = "EaD";
+}
+
+
+@*<div class="row cursos-banner">
+    <div class="container">
+
+        <h1>EaD</h1>
+
+        <ul>
+            <li>Mais de 5 anos de experiência</li>
+            <li>Professores que dominam o assunto</li>
+            <li>Temas atualizados</li>
+        </ul>
+        <a href="/Inscreva/" class="btn btn-lg btn-pos">Quero me matricular</a>
+    </div>
+</div>*@
+
+<div class="row Cursos">
+
+    <div class="container">
+
+        <h1 class="text-center">Conheça nossos EaDs</h1>
+        <div class="flex-columns">
+            @foreach (var t in Model.cursos)
+            {
+                <div class="col-md-3 col-xs-12 curso">
+                    <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12"><img src="~/Cursos/banner/@t.id/" /></a>
+                    <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12 margin-top">@t.titulo</a>
+                </div>
+            }
+        </div>
+        <div class="col-md-12 col-xs-12 text-center">
+            <a href="/Inscreva/" class="btn btn-pos curso-matricule-se-ja">Matricule-se já</a>
+        </div>
+        <div class="clearfix margin-bottom"></div>
+    </div>
+</div>
+
+<div class="row ProximasTurmas">
+    <div class="container">
+        <h1>Matricule-se. Ainda dá tempo!</h1>
+
+        @foreach (var c in Model.curso)
+        {
+            <div class="col-md-4 col-xs-12 ProximasAulasTable">
+                <p>
+                    <br />
+                    <strong>@c.titulo</strong><BR />
+                    @if (c.inicio_confirmado == 0)
+                    {
+                        <strong>Início previsto: </strong>
+                    }
+                    else
+                    {
+                        <strong>Início confirmado: </strong>
+                    }
+                    @c.data_inicio.ToShortDateString()
+                    <br />
+                    <a href="/Turma/@c.titulo1/" class="btn btn-primary">Saiba mais</a>
+                </p>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="Contato hidden-xs row">
+    <div class="container">
+        <div class="col-md-12 col-xs-12">
+
+            <div class="col-md-6 col-xs-12 text-center contato-esquerda">
+                <h1><span class="glyphicon glyphicon-earphone"></span><br />TEM ALGUMA DÚVIDA?</h1>
+                <p>Entramos em contato com você</p>
+            </div>
+
+            <div class="col-md-6 col-xs-12 form-horizontal contato-direita">
+                <input class="form-control" type="text" id="ContatoNome" placeholder="Nome" />
+                <input class="form-control" type="email" id="ContatoEmail" placeholder="E-mail" />
+                <input class="form-control" type="text" id="ContatoTelefone" placeholder="Telefone (XX)XXXXX-XXXX ou (XX)XXXX-XXXX" />
+                <textarea class="form-control" placeholder="Mensagem" id="ContatoMensagem"></textarea>
+                <button class="btn btn-ok" type="button" id="ContatoOk">ENVIAR</button>
+                <span id="ContatoErro"></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+

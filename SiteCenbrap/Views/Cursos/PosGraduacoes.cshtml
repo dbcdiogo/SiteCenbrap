@@ -1,0 +1,168 @@
+﻿@model SiteCenbrap.Models.PosGraduacoesView
+@{
+    ViewBag.Title = "Pós-Graduações";
+}
+
+<!--<div class="row cursos-banner">
+    <div class="container">
+
+        <h1>Cursos de Pós-Graduação Latu Senso</h1>
+
+        <ul>
+            <li>Mais de 5 anos de experiência</li>
+            <li>5.000 alunos formados</li>
+            <li>Professores que dominam o assunto</li>
+            <li>Temas atualizados</li>
+        </ul>
+        <a href="/Inscreva/" class="btn btn-lg btn-pos">Quero me matricular</a>
+    </div>
+</div>
+
+<div class="row div-mec margin-top-50">
+    <div class="container text-center">
+
+        <div class="col-md-6 col-xs-12 mec">
+            <img src="~/Images/MEC.png" />
+            <p>Reconhecido<BR />pelo MEC</p>
+
+        </div>
+
+        <div class="col-md-6 col-xs-12 compromisso">
+            <p>MATRICULE-SE PARA <br /> PRIMEIRA AULA</p><p class="continue">e continue apenas <br />se gostar</p>
+        </div>
+
+    </div>
+</div>-->
+
+<div class="row div-pq-pos">
+
+    <div class="container">
+
+        <h1>Por que fazer uma Pós-Graduação médica?</h1>
+        <p>A verdade é que as pós-graduações médicas, quando ministradas por um qualificado e reconhecido corpo docente, se apresentam como uma incontestável e eficiente forma de educação continuada. E com o reconhecimento do MEC.</p>
+        <div>
+            <a href="/Faq/" class="btn btn-lg btn-success">Saiba mais</a>
+            <a href="/Inscreva/" class="btn btn-lg btn-danger">Quero me matricular</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="row sobreCenbrap">
+
+    <div class="container">
+
+        <div class="col-md-12 col-xs-12 text-center">
+
+            <div class="flex-columns">
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/icone_professores.png" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>Professores renomados</strong></div>
+                </div>
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/icone_duracao.png" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>18 meses duração</strong></div>
+                    <div class="col-md-12 col-xs-12 margin-top">Aulas em 1 final de semana por mês</div>
+                </div>
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/icone_atualizacao.png" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>Atualização e aprendizado</strong></div>
+                </div>
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/icone_publico.png" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>Público-alvo</strong></div>
+                    <div class="col-md-12 col-xs-12 margin-top">Médicos</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+
+</div>
+
+<div class="row Cursos">
+
+    <div class="container">
+
+        <h1 class="text-center">Conheça nossos cursos</h1>
+
+        @foreach (var t in Model.cursos)
+        {
+            <div class="col-md-3 col-xs-12 curso text-center">
+                <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12"><img src="~/Cursos/banner/@t.id/" /></a>
+                <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12 margin-top">@t.titulo</a>
+            </div>
+        }
+        <div class="col-md-3 col-xs-12">
+            <a href="/Inscreva/" class="btn btn-pos curso-matricule-se-ja">Matricule-se já</a>
+        </div>
+        <div class="clearfix margin-bottom"></div>
+    </div>
+</div>
+
+<div class="row certificacao">
+    <div class="container">
+        <div class="col-md-4 col-xs-10 certificacao-title">Certificação e objetivos</div>
+        <div class="col-md-12 col-xs-12">
+            <div class="col-md-4 col-xs-12"><img src="~/Images/funorte.png" /></div>
+            <div class="col-md-8 col-xs-12">O curso é ministrado pelas Faculdades Unidas do Norte de Minas - FUNORTE (instituição de ensino superior pertencente ao grupo SOEBRAS, e mantenedora do Instituto de Ciências da Saúde - ICS), credenciada no MEC por força da Portaria n. 2.179 / 2000.</div>
+        </div>
+    </div>
+</div>
+
+<div class="row ProximasTurmas">
+    <div class="container">
+        <h1>Matricule-se. Ainda dá tempo!</h1>
+
+        @foreach (var c in Model.curso)
+        {
+            <div class="col-md-4 col-xs-12 ProximasAulasTable">
+                <p>
+                    <br />
+                    <strong>@c.titulo</strong><BR />
+                    @if(c.inicio_confirmado == 0)
+                    {
+                        <strong>Início previsto: </strong>
+                    }
+                    else
+                    {
+                        <strong>Início confirmado: </strong>
+                    }
+                    @c.data_inicio.ToShortDateString()
+                    <br />
+                    <a href="/Turma/@c.titulo1/" class="btn btn-primary">Saiba mais</a>
+                </p>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="Contato hidden-xs row">
+    <div class="container">
+        <div class="col-md-12 col-xs-12">
+
+            <div class="col-md-6 col-xs-12 text-center contato-esquerda">
+                <h1><span class="glyphicon glyphicon-earphone"></span><br />TEM ALGUMA DÚVIDA?</h1>
+                <p>Entramos em contato com você</p>
+            </div>
+
+            <div class="col-md-6 col-xs-12 form-horizontal contato-direita">
+                <input class="form-control" type="text" id="ContatoNome" placeholder="Nome" />
+                <input class="form-control" type="email" id="ContatoEmail" placeholder="E-mail" />
+                <input class="form-control" type="text" id="ContatoTelefone" placeholder="Telefone (XX)XXXXX-XXXX ou (XX)XXXX-XXXX" />
+                <textarea class="form-control" placeholder="Mensagem" id="ContatoMensagem"></textarea>
+                <button class="btn btn-ok" type="button" id="ContatoOk">ENVIAR</button>
+                <span id="ContatoErro"></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/PosGraduacoes")
+}

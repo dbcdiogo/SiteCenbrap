@@ -1,0 +1,628 @@
+﻿@model SiteCenbrap.Models.CursosView
+@{
+    ViewBag.Title = Model.titulo_curso.titulo;
+    string turma;
+}
+
+@if (@Model.tipo_curso == 2)
+{
+    <div class="row cursos-banner" codigo="@Model.titulo_curso.codigo">
+        <div class="container">
+            <h1>
+                @Model.titulo_curso.titulo_detalhado
+                @if (@Model.tipo_curso != 2)
+                {
+                    <label>(* curso presencial)</label>
+                }
+                else
+                {
+                    <label>(* 100% online - Carga horária @Model.carga_horaria.ToString()h)</label>
+                }
+            </h1>
+            <a href="/Inscreva/Curso/@Model.titulo_curso.codigo" class="btn btn-lg btn-pos margin-top-50">Quero me matricular</a>
+
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="row TituloCurso espacamento-superior30">
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12">
+                <h2 class="text-center">
+                    @Model.titulo_curso.titulo_detalhado
+                    @if (@Model.tipo_curso != 2)
+                    {
+                        <label>(*curso presencial)</label>
+                    }
+                    else
+                    {
+                        <label>(*100% online - Carga horária @Model.carga_horaria.ToString()h)</label>
+                    }
+                </h2>
+
+                @if (@Model.tipo_curso == 0)
+                {
+                    <h4 class="text-center">Saiba todos os detalhes do curso selecionando a cidade de seu interesse</h4>
+                    <center>
+                        <select class="form-control" onchange="abreCursoTurma(this.value)" style="width:50% !important; -webkit-box-shadow: 0px 0px 5px 2px rgba(102,175,233,1);
+-moz-box-shadow: 0px 0px 5px 2px rgba(102,175,233,1); box-shadow: 0px 0px 5px 2px rgba(102,175,233,1); border:1px solid #66AFE9">
+                            <option value="">-- Selecione --</option>
+                            @foreach (var c in Model.cidades)
+                            {
+                                <option value="@c.titulo1">@c.cidade</option>
+                            }
+                        </select>
+                    </center>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (@Model.tipo_curso != 0)
+{
+
+    if (@Model.tipo_curso != 2)
+    {
+
+        <div class="row IconeCursos">
+
+            <div class="container">
+
+                <div class="col-md-12 col-xs-12 text-center">
+
+                    @if (@Model.tipo_curso == 0)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_professores.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Reconhecido pelo MEC</h3></div>
+                        </div>
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_duracao.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>@Model.parcelas meses de duração</h3></div>
+                        </div>
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_atualizacao.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>1 fim de semana por mês</h3></div>
+                        </div>
+                    }
+                    @if (@Model.tipo_curso == 1)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_professores.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Certificação <BR />@Model.certificadora</h3></div>
+                        </div>
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_duracao.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Carga horária <br /> @Model.carga_horaria.ToString()h</h3></div>
+                        </div>
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_enfase.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Forte ênfase <BR />prática</h3></div>
+                        </div>
+                    }
+                    <div class="col-md-3 col-xs-6 espacamento-superior">
+                        <div class="col-md-12 col-xs-12"><img src="~/Images/icone_publico.png" /></div>
+                        <div class="col-md-12 col-xs-12 margin-top"><h3>@Html.Raw(Model.titulo_curso.publico_alvo)</h3></div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-xs-11 text-right espacamento-superior30">
+                    <a href="/Inscreva/Curso/@Model.titulo_curso.codigo" class="btn btn-pos">Quero me matricular</a>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    }
+
+
+    if (@Model.tipo_curso == 1)
+    {
+        <div class="ProximasTurmas row espacamento-superior60">
+            <div class="container">
+                <div class="col-md-8 col-xs-12">
+                    <h1>Próxima(s) turma(s) de @Model.titulo_curso.titulo</h1>
+                    @if (@Model.curso.Count > 0)
+                    {
+                        <text>
+                            @foreach (var c in Model.curso)
+                            {
+                                turma = new String(c.titulo1.Where(n => char.IsDigit(n)).ToArray());
+
+                                <div class="col-md-6 col-xs-12 ProximasAulasTable">
+                                    <p>
+                                        <br />
+                                        <strong>@c.cidade - Turma @turma</strong><BR />
+                                        @if (c.inicio_confirmado == 0)
+                                        {
+                                            <strong>Início previsto: </strong>
+                                            @c.data_inicio.ToShortDateString()
+                                        }
+                                        else
+                                        {
+                                            if (c.vagas_esgotadas == 1)
+                                            {
+                                                <strong>Vagas esgotadas</strong>
+                                            }
+                                            else
+                                            {
+                                                <strong>Início confirmado: </strong>
+                                                @c.data_inicio.ToShortDateString()
+                                            }
+                                        }
+
+                                        <br />
+                                        @if (c.visualiza_site == 1 && c.vagas_esgotadas == 0)
+                                        {
+                                            <a href="/Turma/@c.titulo1/" class="btn btn-primary">Saiba mais</a>
+                                        }
+                                    </p>
+                                </div>
+                            }
+                        </text>
+                    }
+                    else
+                    {
+                        <div class="col-md-12 col-xs-12 ProximasAulasTable">
+                            <p><br /><br /><strong>Não há nova(s) turma(s) com matrículas abertas nesse momento.</strong></p>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4 col-xs-12">
+
+                    <h1 class="text-center fs30">Estão falando por aí</h1>
+                    <div id="depoimentos" class="carousel slide margin-top" data-ride="carousel">
+
+                        <div class="carousel-inner" role="listbox">
+                            @{ int cont = 0; }
+                            @foreach (var d in Model.depoimentos)
+                            {
+                                cont++;
+                                <div class="item @(cont == 1 ? "active" : "")">
+                                    <p>"@d.texto"</p>
+                                    <p><strong>@d.nome</strong> <br /> <span class="DepoimentosCurso">@d.curso @d.cidade</span></p>
+                                </div>
+                            }
+
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#depoimentos" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Anterior</span>
+                        </a>
+                        <a class="right carousel-control" href="#depoimentos" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Próxima</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row Disciplinas espacamento-superior30 bg-danger bgcinza">
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12">
+
+                @if (@Model.tipo_curso == 0)
+                {
+                    <h2 class="text-center"><span class="glyphicon glyphicon-book"></span> Disciplinas</h2>
+
+                    <ul class="col-md-12 col-xs-12 list-group list-group-striped list-group-simbol">
+                        @foreach (var d in Model.disciplina)
+                        {
+                            <li class="list-group-item">@d.disciplina</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <h2 class="text-center"><span class="glyphicon glyphicon-book"></span> Características gerais</h2>
+                    <div class="col-md-12 col-xs-12">
+                        @if (Model.idhotel == 0)
+                        {
+                            @Html.Raw(Model.curso_texto.Replace("\n", "<br>"))
+                        }
+                        else
+                        {
+                            @Html.Raw(Model.curso_texto.Replace("\n", ""))
+                        }
+                    </div>
+                }
+                <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                    <a href="/Inscreva/Curso/@Model.titulo_curso.codigo" class="btn btn-pos">Quero me matricular</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    if (Model.professores.Count > 0)
+    {
+        <div class="Professores row">
+            <div class="container">
+                <div class="col-md-12 col-xs-12 text-center">
+
+                    <h2 class="text-center">
+                        <span class="glyphicon glyphicon-education"></span> @if (@Model.tipo_curso == 0)
+                        {@Html.Raw("Professores renomados") }
+                    else
+                    { @Html.Raw("Professor(es)")}
+                    </h2>
+                    <div class="flex-columns">
+                        @foreach (var t in Model.professores)
+                        {
+                            <div class="col-md-3 col-sm-3 col-xs-6 margin-bottom col-centered">
+                                <div class="col-md-11 col-md-offset-1 col-xs-11 col-xs-offset-1 text-center">
+                                    <!--<img src="~/Cursos/Foto/@t.Titulo_curso_professor_id/?tamanho=200" class="professor img-responsive img-circle"><br>-->
+                                    <h4>@t.professor</h4>
+                                    <p>@t.especializacao</p>
+                                    <p><a href="javascript:void(0);" class="btn btn-curriculo" onclick="Modal('/Professor/@t.Titulo_curso_professor_id/',@t.Titulo_curso_professor_id);"><span class="glyphicon glyphicon-search"></span></a></p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                        <a href="/Inscreva/Curso/@Model.titulo_curso.codigo" class="btn btn-pos">Quero me matricular</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row Investimento">
+        <div class="container">
+            <h2 class="text-center">Investimento</h2>
+            <div class="row">
+
+                @if (@Model.tipo_curso == 0)
+                {
+                    <div class="col-md-4 col-xs-12">
+                        <p class="valor-taxa-matricula">Valor da taxa de matrícula:</p>
+                        <div class="matricula-valor">
+                            R$<br /><span>@Model.matricula1*</span>
+                        </div>
+                        <p>*até 7 dias anteriores ao início da turma. Após essa data o valor da matrícula é de R$ @Model.matricula.</p>
+                    </div>
+
+                    <div class="col-md-3 col-md-offset-1 col-xs-10 col-xs-offset-1">
+                        @*<p class="valor-taxa-matricula">Valor da(s) parcela(s):</p>*@
+                        <div class="valor-parcelas">
+                            R$<br /><span>@Model.valor</span>
+                        </div>
+                        <div class="parcelas">
+                            @Model.parcelas.ToString()x
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-md-offset-1 col-xs-8 col-xs-offset-2 GanheDesconto">
+                        Ganhe <br /> 10% <BR />de desconto*<br />
+                        <span>*pagamento total à vista.</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-4 col-xs-12">
+                        @if ((Model.titulo_curso.codigo == 29) || (Model.titulo_curso.codigo == 32))
+                        {
+                            <p class="valor-taxa-matricula">Valor da taxa de matrícula:</p>
+                            <div class="matricula-valor">
+                                R$<br /><span>@Model.matricula1*</span>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-md-3 col-md-offset-1 col-xs-10 col-xs-offset-1">
+                        @*@if ((Model.titulo_curso.codigo == 29) || (Model.titulo_curso.codigo == 32))
+                            {*@
+                        @*<p class="valor-taxa-matricula">Valor da(s) parcela(s):</p>*@
+                        <div class="valor-parcelas">
+                            R$<br /><span>@Model.valor</span>
+                        </div>
+                        <div class="parcelas">
+                            @Model.parcelas.ToString()x
+                        </div>
+                        @*}
+                            else
+                            {
+                                <p class="valor-taxa-matricula">Valor:</p>
+                                <div class="valor-parcelas">
+                                    R$<br /><span>@Model.valor</span>
+                                </div>
+                            }*@
+                        <br />&nbsp;
+                    </div>
+
+                    <div class="col-md-3 col-md-offset-1 col-xs-8 col-xs-offset-2">
+                        @if (Model.titulo_curso.codigo == 32)
+                        {
+                            <img src="~/Images/selo.png" /><br />
+                            <p>
+                                * Desconto será aplicado nas mensalidades;<br />
+                                ** O aluno (ex-aluno) de pós-graduações deverá constar sem restrições no sistema do Cenbrap.
+                                <br />&nbsp;
+                            </p>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12 text-center" style="padding:15px 0px;">
+                    <img src="~/Images/cartoes.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+    if (Model.titulo_curso.codigo == 32)
+    {
+        <div class="row certificacao espacamento-superior60">
+            <div class="container">
+                <div class="col-md-6 col-xs-10 certificacao-title">CONVENÇA SUA EMPRESA</div>
+                <div class="col-md-12 col-xs-12">
+                    <div class="col-md-12 col-xs-12">
+                        Você quer fazer este curso, mas não sabe como justificar para sua empresa a importância da sua participação? O CENBRAP te ajuda!<br /><br />
+                        Envie aos diretores uma carta personalizada com as informações sobre o curso, e de como você poderá ser ainda mais útil para empresa após a realização dele.
+                        <br /><br /><center>
+                            <a href="~/Images/Carta aos diretores.docx" class="btn btn-pos font-responsive">ACESSE O MODELO DE "CARTA AO DIRETOR"</a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    if (@Model.tipo_curso == 0)
+    {
+        <div class="row CursosSobre">
+            <div class="container">
+                <div class="col-md-8 col-md-offset-2 col-xs-12">
+
+                    <h2 class="text-center"><span class="glyphicon glyphicon-check"></span> Certificação</h2>
+                    <div class="col-md-12 col-xs-12">
+                        <div class="col-md-4 col-xs-12"><img src="/Images/funorte.png"></div>
+                        <div class="col-md-8 col-xs-12">
+                            O curso é ministrado e certificado pela FUNORTE/ICS, instituição de ensino superior credenciada no MEC por força da Portaria n. 2.179 / 2000.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="row certificacao espacamento-superior60 porquefazer">
+            <div class="container">
+                <div class="col-md-6 col-xs-10 certificacao-title">Por que fazer uma pós-graduação médica?</div>
+                <div class="col-md-12 col-xs-12">
+                    <div class="col-md-3 col-xs-12"><img src="/Images/fazer_pos.png" height="200"></div>
+                    <div class="col-md-9 col-xs-12 fs20">
+                        Porque em tempos de "Dr. Google", a educação médica continuada se tornou obrigatória. Uma pesquisa feita entre os alunos do Cenbrap mostrou que a maior parte deles (67% da amostra) já são especialistas em alguma área, mas buscam um aprendizado contínuo e reconhecido pelo MEC, além de networking e preparação para provas de título de especialista.
+                        <div class="pull-right margin-top-50"><a href="/Faq/" class="btn btn-lg btn-success">Saiba mais</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    }
+
+    if (@Model.tipo_curso != 1)
+    {
+        <div class="ProximasTurmas row espacamento-superior60">
+            <div class="container">
+                @if (@Model.tipo_curso != 2)
+                {
+                    <div class="col-md-8 col-xs-12">
+
+                        <h1>Próxima(s) turma(s) de @Model.titulo_curso.titulo</h1>
+
+                        @if (@Model.curso.Count > 0)
+                        {
+                            <text>
+                                @foreach (var c in Model.curso)
+                                {
+                                    <div class="col-md-6 col-xs-12 ProximasAulasTable">
+                                        <p>
+                                            <br />
+                                            <strong>@c.cidade</strong><BR />
+                                            @if (c.inicio_confirmado == 0)
+                                            {
+                                                <strong>Início previsto: </strong>
+                                            }
+                                            else
+                                            {
+                                                <strong>Início confirmado: </strong>
+                                            }
+                                            @c.data_inicio.ToShortDateString()
+                                            <br />
+                                            <a href="/Turma/@c.titulo1/" class="btn btn-primary">Saiba mais</a>
+                                        </p>
+                                    </div>
+                                }
+                            </text>
+                        }
+                        else
+                        {
+                            <div class="col-md-12 col-xs-12 ProximasAulasTable">
+                                <p><br /><br /><strong>Não há nova(s) turma(s) com matrículas abertas nesse momento.</strong></p>
+                            </div>
+                        }
+
+
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+
+                        <h1 class="text-center fs30">Estão falando por aí</h1>
+                        <div id="depoimentos" class="carousel slide margin-top" data-ride="carousel">
+
+                            <div class="carousel-inner" role="listbox">
+                                @{ int cont = 0; }
+                                @foreach (var d in Model.depoimentos)
+                                {
+                                    cont++;
+                                    <div class="item @(cont == 1 ? "active" : "")">
+                                        <p>"@d.texto"</p>
+                                        <p><strong>@d.nome</strong> <br /> <span class="DepoimentosCurso">@d.curso @d.cidade</span></p>
+                                    </div>
+                                }
+
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#depoimentos" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a class="right carousel-control" href="#depoimentos" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Próxima</span>
+                            </a>
+
+                        </div>
+
+
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 col-xs-12 col-centered">
+
+                        <h1 class="text-center fs30">Estão falando por aí</h1>
+                        <div id="depoimentos" class="carousel slide margin-top" data-ride="carousel">
+
+                            <div class="carousel-inner" role="listbox">
+                                @{ int cont = 0; }
+                                @foreach (var d in Model.depoimentos)
+                                {
+                                    cont++;
+                                    <div class="item @(cont == 1 ? "active" : "")">
+                                        <p>"@d.texto"</p>
+                                        <p><strong>@d.nome</strong> <br /> <span class="DepoimentosCurso">@d.curso @d.cidade</span></p>
+                                    </div>
+                                }
+
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#depoimentos" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a class="right carousel-control" href="#depoimentos" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Próxima</span>
+                            </a>
+
+                        </div>
+
+
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <!--<div class="row AssistaPrimeira">
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12">
+
+                <div class="col-md-2 col-md-offset-2 hidden-xs">
+                    <div class="compromisso"></div>
+                </div>
+                <div class="col-md-8 col-xs-12 espacamento-superior">
+                    <strong>MATRICULE-SE PARA PRIMEIRA AULA</strong><br />
+                    e continue apenas se gostar
+                </div>
+
+            </div>
+
+        </div>
+    </div>-->
+
+    if (@Model.tipo_curso != 2)
+    {
+        <div class="row certificacao espacamento-superior60">
+            <div class="container">
+                <div class="col-md-6 col-xs-10 certificacao-title">E se eu me matricular e a turma não se formar?</div>
+                <div class="col-md-12 col-xs-12">
+                    <div class="col-md-12 col-xs-12">
+                        A confirmação da turma está condicionada a um número mínimo de alunos confirmados (matriculados). O comunicado oficial de abertura (ou não) da turma será enviado para o e-mail cadastrado do aluno até, no máximo, a terça-feira que antecede a data provável de início. Havendo adiamento, o CENBRAP se compromete, para os que quiserem desistir do curso, a devolver o valor integral pago pela matrícula em até 3 dias úteis, contados à partir da comunicação da desistência.
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    if (@Model.tipo_curso == 0)
+    {
+        <text>
+            @if (Model.faq.Count > 0)
+            {
+                <div class="Perguntasfrequentes row espacamento-superior60">
+                    <div class="container">
+                        <div class="col-md-12 col-xs-12">
+
+                            <h2 class="text-center"><span class="glyphicon glyphicon-question-sign"></span> Perguntas frequentes</h2>
+                            @{ int cont1 = 0;}
+                            @foreach (var faq in Model.faq)
+                            {
+                                cont1++;
+                                <div class="panel panel-faq">
+                                    <div class="panel-heading" role="tab" id="@("heading" + cont1)">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#@("accordion" + cont1)" href="#@("collapse" + cont1)" aria-expanded="true" aria-controls="#@("collapse" + cont1)">
+                                                @faq.pergunta
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="@("collapse" + cont1)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + cont1)">
+                                        <div class="panel-body">
+                                            @Html.Raw(faq.resposta)
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </text>
+    }
+
+    <div class="Contato Contato-curso row espacamento-superior60">
+        <div class="container">
+            <div class="col-md-12 col-xs-12">
+
+                <div class="col-md-6 col-xs-12 text-center contato-esquerda">
+                    <h1><span class="glyphicon glyphicon-earphone"></span><br />TEM ALGUMA DÚVIDA?</h1>
+                    <p>Entramos em contato com você</p>
+                </div>
+
+                <div class="col-md-6 col-xs-12 form-horizontal contato-direita">
+                    <input class="form-control" type="text" id="ContatoNome" placeholder="Nome" />
+                    <input class="form-control" type="email" id="ContatoEmail" placeholder="E-mail" />
+                    <input class="form-control" type="text" id="ContatoTelefone" placeholder="Telefone (XX)XXXXX-XXXX ou (XX)XXXX-XXXX" />
+                    <textarea class="form-control" placeholder="Mensagem" id="ContatoMensagem"></textarea>
+                    <button class="btn btn-ok" type="button" id="ContatoOk">ENVIAR</button>
+                    <span id="ContatoErro"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/Cursos")
+}
+

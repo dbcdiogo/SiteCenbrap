@@ -1,0 +1,95 @@
+﻿@model SiteCenbrap.Models.FaqView
+@{
+    ViewBag.Title = "Perguntas Frequentes";
+}
+
+<div class="container margin-top-50">
+    <div class="row">
+        <h1>FAQ</h1>
+
+        @*@{int cont = 0; }
+        <!-- Nav tabs -->
+        <div class="btn-group btn-group-justified" role="tablist">
+            @foreach (var f in Model.faqs)
+            {
+                cont++;
+                <a href="#@cont" aria-controls="@cont" role="tab" data-toggle="tab" class="btn btn-faq @(cont == 1 ? "active" : "")">@f.titulo</a>
+            }
+        </div>
+
+        <!-- Tab panes -->
+        @{cont = 0; int cont1 = 0;}
+        <div class="tab-content margin-top-50">
+
+            @foreach (var f in Model.faqs)
+            {
+                cont++;
+
+            <div role="tabpanel" class="tab-pane @(cont == 1 ? "active" : "")" id="@cont">
+
+                <div class="panel-group" id="@("accordion"+cont)" role="tablist" aria-multiselectable="true">
+                    @foreach (var pergs in f.faqs)
+                    {
+                        cont1++;
+                        <div class="panel panel-faq">
+                            <div class="panel-heading" role="tab" id="@("heading"+cont1)">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#@("accordion"+cont)" href="#@("collapse"+cont1)" aria-expanded="true" aria-controls="#@("collapse"+cont1)">
+                                        @pergs.pergunta
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="@("collapse"+cont1)" class="panel-collapse collapse @(cont == 1 ? "in" : "")" role="tabpanel" aria-labelledby="@("heading"+cont1)">
+                                <div class="panel-body">
+                                    @Html.Raw(pergs.resposta)
+                                </div>
+                            </div>
+
+                        </div>
+
+                    }
+                </div>
+                <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                    @if (@cont > 1)
+                    {
+                        <h4 class="text-center">Conheça as perguntas mais frequentes sobre nossos cursos. Antes, escolha a cidade de seu interesse</h4>
+                        <center>
+                            <select class="form-control" onchange="abreCursoTurma(this.value)" style="width:50% !important">
+                                <option value="">-- Selecione --</option>
+                                @foreach (var c in f.cidades)
+                                {
+                                    <option value="@c.titulo1">@c.cidade</option>
+                                 }
+                            </select>
+                      </center>
+                    }
+                </div>
+            </div>
+        }*@
+
+        <br />
+        <center>
+            <h4>Conheça as perguntas (e respostas!) mais frequentes sobre nossos cursos. Basta escolher o curso e cidade de seu interesse:</h4>
+            <br />
+            Curso:
+            <select class="form-control input_azul" onchange="selecionaCurso(this.value)" style="width:50% !important;" id="lista_cursos" name="lista_cursos">
+                <option value="">-- Selecione --</option>
+                @foreach (var c in Model.cursos)
+        {
+            <option value="@c.id">@c.titulo</option>
+}
+            </select>
+            <br />
+            Cidade:
+            <select class="form-control" onchange="abreCursoTurma(this.value)" style="width:50% !important" id="lista_cidades" name="lista_cidades">
+                <option value="">-- Nenhum curso selecionado --</option>
+            </select>
+        </center>
+    </div>
+
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Faq")
+}

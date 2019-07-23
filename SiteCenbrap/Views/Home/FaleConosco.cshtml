@@ -1,0 +1,66 @@
+﻿@model Biblioteca.Entidades.Paginas
+@{
+    ViewBag.Title = Model.titulo;
+}
+
+<div class="container margin-top-50 fale_conosco">
+    <div class="row">
+
+
+        <div class="col-md-5 col-xs-12 ">
+            <h1><span class="glyphicon glyphicon-earphone"></span> Ligamos pra você</h1><br />
+            <h5><strong>Central de atendimento:</strong> 0300 313 1538 (custo de ligação local)</h5>
+            <h5><strong>Horário de atendimento:</strong> 8h00 - 18h00 (dias úteis, horário de Brasilia)</h5>
+            <h5><strong>E-mail:</strong> contato@cenbrap.com.br</h5>
+            <h5><img src="~/Images/whatsapp.png" /> <strong>Whatsapp:</strong> <a target="_blank" href="https://api.whatsapp.com/send?phone=5511944786755">11 9 4478-6755</a></h5>
+        </div>
+
+        <div class="form-horizontal col-md-5 col-xs-12 col-md-offset-1">
+            <div class="form-group"><label class="control-label">Caso prefira, envie-nos sua mensagem:</label></div>
+            <div class="form-group">
+                <label class="control-label" for="nome">Nome</label>
+                <input type="text" id="nome" placeholder="Nome" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="email">E-mail</label>
+                <input type="email" id="email" placeholder="E-mail" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="telefone">Telefone</label>
+                <input type="text" id="telefone" placeholder="Telefone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="curso">Curso de seu interesse</label>
+                <select id="curso" class="form-control">
+                    <option value="">Selecione</option>
+                    @foreach (var c in ViewBag.Cursos)
+            {
+                        <option value="@c">@c</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="cidade">Cidade onde mora</label>
+                <input type="text" id="cidade" placeholder="Cidade onde mora" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="assunto">Assunto</label>
+                <input type="text" id="assunto" placeholder="Assunto" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="texto">Texto</label>
+                <textarea id="texto" placeholder="Texto" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-ok" id="btnEnviar">Enviar</button>
+            </div>
+            <div id="erroMsg"></div>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/FaleConosco")
+}

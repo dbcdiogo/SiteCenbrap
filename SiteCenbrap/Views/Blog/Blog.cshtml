@@ -1,0 +1,114 @@
+﻿@model SiteCenbrap.Models.BlogView
+
+@{
+    ViewBag.Title = Model.blog.titulo;
+    ViewBag.Image = "http://cenbrap.com.br/Blog/Img/" + @Model.blog.blog_id;
+}
+
+<div class="container margin-top-50 blog">
+
+    <div class="row">
+        <div class="col-md-9 col-xs-12">
+
+            @*@if (Model.blog.imagem != "")
+            {
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 text-center">
+                        <img src="~/Blog/Img/@Model.blog.blog_id/" class="img-responsive center-block" />
+                    </div>
+                </div>
+            }*@
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <h1>@Model.blog.titulo</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    DATA: <span class="green">@Model.blog.publicarEm.ToLongDateString()</span>
+                </div>
+                @if (Model.blog.autor != "")
+                {
+                    <div class="col-md-6 col-xs-6">
+                        AUTOR: <span class="green">@Model.blog.autor</span>
+                    </div>
+                }
+                @if (Model.blog.fonteOrigem != "")
+                {
+                    <div class="col-md-6 col-xs-6">
+                        FONTE: <span class="green">@Model.blog.fonteOrigem</span>
+                    </div>
+                }
+                @if (Model.blog.categoria != "")
+                {
+                    <div class="col-md-6 col-xs-6">
+                        CATEGORIA: <span class="green">@Model.blog.categoria</span>
+                    </div>
+                }
+
+                <div class="col-md-12 col-xs-12 compartilhe" style="text-align:right">
+                    Compartilhe:
+                    <a data-site="" href="http://www.facebook.com/sharer.php?u=https://www.cenbrap.com.br/blog/@Model.blog.tituloUrl" target="_blank"><img src="~/Images/facebook.png" title="Facebook" alt="Share on Facebook"></a>
+                    <a data-site="" href="http://twitter.com/share?url=https://www.cenbrap.com.br/blog/@Model.blog.tituloUrl&amp;text=@Model.blog.titulo" target="_blank"><img src="~/Images/twiter.png" title="Twitter" alt="Tweet about this on Twitter"></a>
+                    <a data-site="" href="https://plus.google.com/share?url=www.cenbrap.com.br/blog/@Model.blog.tituloUrl" target="_blank"><img src="~/Images/google.png" title="Google+" alt="Share on Google+"></a>
+                </div>
+
+            </div>
+
+            <div class="row margin-top-50">
+                <div class="col-md-12 col-xs-12 texto">
+                    @Html.Raw(Model.blog.texto)
+                </div>
+            </div>
+
+            <div class="row margin-top-50">
+                <div class="col-md-12 col-xs-12 text-center">
+                    <button class="btn btn-default" onclick="history.back(-1);">Voltar</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <label class="green">GARANTA SUA VAGA</label>
+                    <a href="http://www.congressomedicina.com.br/" target="_blank"><img src="~/Images/jb.jpg" class="img-responsive" /></a><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/Cursos/PreparatorioProvaTituloPsiquiatria/"><img src="~/Images/botao-ead-psiquiatria.png" class="img-responsive" /></a><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/Turma/EADPPTPS5/"><img src="~/Images/botao-psiquiatria.png" class="img-responsive" /></a><br /> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/Turma/EADPPTPS5/"><img src="~/Images/botao-psiquiatria.png" class="img-responsive" /></a><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/cursos/posgraduacoes"><img src="~/Images/botao-pos.png" class="img-responsive" /></a><br />
+                    <a href="/cursos/workshops"><img src="~/Images/botao-workshop.png" class="img-responsive" /></a><br />
+                    <a href="/cursos/ead"><img src="~/Images/botao-ead.png" class="img-responsive" /></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12 margin-top-50">
+                    <label class="green">MAIS LIDAS</label>
+                    @foreach (var b in Model.lidas)
+                    {
+                        <div class="row noticia-blog">
+                            <a href="~/Blog/@b.tituloUrl"><img src="http://www.cenbrap.com.br/Blog/Img/@b.blog_id" class="img-responsive">@b.titulo</a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

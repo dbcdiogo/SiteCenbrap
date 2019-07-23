@@ -1,0 +1,98 @@
+﻿<div class="container margin-top-50">
+
+    @if ((ViewBag.aluno == null) || (ViewBag.turma == null))
+    {
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <h2>ERRO! Aluno ou Turma informados estão incorretos!</h2>
+            </div>
+        </div>
+
+    }
+    else
+    {
+
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <h2>
+                    Aluno: <b>@ViewBag.aluno</b><br />
+                    Curso: <b>@ViewBag.turma</b>
+                </h2><br />
+                <h4>Para que possamos continuar atendendo suas expectativas, gentileza nos responder da sua intenção à partir de agora.<br />Basta selecionar uma das opções abaixo e depois clicar em "ENVIAR".</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <br /><input type="radio" id="idtipo" name="idtipo" value="1" checked onclick="limpa(1)" /> <b>QUERO CONTINUAR.</b> Mantenho meu interesse por essa turma e quero me manter matriculado nela. Estou ciente do seu adiamento para o dia @ViewBag.adiamento.ToShortDateString() e quero ser informado assim que ela se confirmar.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <br /><input type="radio" id="idtipo" name="idtipo" value="2" onclick="limpa(2)" /> <b>QUERO MUDAR DE TURMA/CURSO.</b> Tenho interesse em fazer a Pós de
+                <Select id="idcurso" name="idcurso" class="form-control2" onchange="mudaCurso(this.value)">
+                    <option value="0">Selecione</option>
+                    @foreach (var n in ViewBag.cursos)
+                    {
+                        if (n.id != ViewBag.codturma)
+                        {
+                            <option value="@n.id">
+                                @n.titulo
+                            @if (n.data_inicio < DateTime.Now)
+                            {
+                                @Html.Raw(" - Turma em andamento iniciada em " + n.data_inicio.ToShortDateString());
+                            }
+                            else
+                            {
+                                if (n.inicio_confirmado)
+                                {
+                                    @Html.Raw(" - Início confirmado para " + n.data_inicio.ToShortDateString());
+                                }
+                                else
+                                {
+                                    if (n.ativo == 1)
+                                    {
+                                        @Html.Raw(" - Início previsto para " + n.data_inicio.ToShortDateString());
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw(" - Faça sua pré-reserva");
+                                    }
+                                }
+                            }
+                            @if (n.ultimas_vagas)
+                            {
+                                @Html.Raw(" - Últimas vagas");
+                            }
+                        </option>
+                    }
+                }
+                </Select>.<br />Quero transferir a minha matrícula para essa turma e ser informado assim que ela se confirmar.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <br /><input type="radio" id="idtipo" name="idtipo" value="4" onclick="limpa(4)" /> <b>QUERO CONVERTER MINHA MATRÍCULA EM ASSINATURA DO MEDTV POR 18 MESES.</b> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <input type="hidden" id="codturma" name="codturma" value="@ViewBag.codturma" />
+                <input type="hidden" id="codaluno" name="codaluno" value="@ViewBag.codaluno" />
+                <br /><input type="radio" id="idtipo" name="idtipo" value="3" onclick="limpa(3)" /> <b>QUERO MEU DINHEIRO DE VOLTA.</b> Não tenho mais interesse em nenhum curso do CENBRAP e gostaria de ser reembolsado no valor que paguei pela matrícula. Para isso, segue: Nome do Banco / Agência / Nr. da Conta / CPF:
+                <input type="text" id="dados" name="dados" class="form-control2" style="width:60%" maxlength="300" onkeyup="dados()" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-lg-12 text-center">
+                <button id="btn_enviar_comunicado" class="btn btn-pos margin-top-50">ENVIAR</button>
+            </div>
+        </div>
+        <div id="ContinuarErro" style="margin-top:30px;"></div>
+
+    }
+
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Comunicado")
+}

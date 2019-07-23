@@ -1,0 +1,92 @@
+﻿@model SiteCenbrap.Models.ContratoView
+@{
+    ViewBag.Title = "Completar Dados";
+}
+
+<div class="container margin-top-50">
+    <div class="row">
+        <h2>Encontramos uma inconsistência no seu cadastro!<br />Por gentileza, atualize os dados solicitados.</h2>
+        @*<p>@Model.curso.titulo</p>*@
+        <p>@Model.aluno.nome (@Model.aluno.cpf)</p>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="col-md-6 col-xs-12 matricula-direita">
+
+        <div class="row">
+            <input type="hidden" id="curso" value="@Model.curso.codigo" />
+            <input type="hidden" id="aluno" value="@Model.aluno.codigo" />
+            <input type="hidden" id="curso_codigo" value="@Model.curso.titulo1" />
+
+            <div class="col-md-4 col-xs-12 has-error">
+                <input name="cep" class="form-control" type="text" id="cep" placeholder="CEP (XXXXX-XXX)" maxlength="9" data-mask="00000-000">
+            </div>
+            <div class="col-md-12 col-xs-12 has-error">
+                <input name="endereco" class="form-control" type="text" id="endereco" placeholder="Endereço" readonly>
+            </div>
+            <div class="col-md-5 col-xs-12 has-error">
+                <input name="bairro" class="form-control" type="text" id="bairro" placeholder="Bairro" readonly maxlength="50">
+            </div>
+            <div class="col-md-5 col-xs-12 has-error">
+                <input name="cidade" class="form-control" type="text" id="cidade" placeholder="Cidade" readonly maxlength="50">
+            </div>
+            <div class="col-md-2 col-xs-12 has-error">
+                <select name="estado" class="form-control" id="estado" readonly>
+                    <option value="">UF</option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AM">AM</option>
+                    <option value="AP">AP</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MG">MG</option>
+                    <option value="MS">MS</option>
+                    <option value="MT">MT</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="PR">PR</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="RS">RS</option>
+                    <option value="SC">SC</option>
+                    <option value="SE">SE</option>
+                    <option value="SP">SP</option>
+                    <option value="TO">TO</option>
+                </select>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <input name="numero" class="form-control" type="text" id="numero" placeholder="Número">
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <input name="complemento" class="form-control" type="text" id="complemento" placeholder="Complemento">
+            </div>
+
+
+            <div class="col-md-12 col-xs-12">
+                <button class="btn btn-ok" type="button" id="Continuar">CONTINUAR</button>
+            </div>
+            <div class="col-md-12 col-xs-12 form_erro">
+                <div id="ContinuarErro"></div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+    </div>
+    
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Completar")
+    @Scripts.Render("~/bundles/Mask")
+}

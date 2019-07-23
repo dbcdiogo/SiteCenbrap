@@ -1,0 +1,30 @@
+﻿@model Biblioteca.Entidades.Aluno_pgto
+@{
+    ViewBag.Title = "Retorno";
+}
+
+<div class="main-content container no-padding inner-page">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div id="log-in" class="site-form log-in-form">
+                <div class="form-output">
+                    
+                    <h2>Retorno</h2>
+
+                    <p>Nome: @Model.aluno.nome</p>
+                    <p>CPF: @Model.aluno.cpf</p>
+                    <p>Valor Mensal: R$ @Model.curso.valor.ToString("N2")</p>
+                    <p>Identificação da transação no PagSeguro: @Model.obs</p>
+                    <p>Retorno do PagSeguro: @Model.txt</p>
+                    <p></p>
+
+                    @if (Model.aluno_curso.situacao == 2)
+                    {
+                        <p><a href="https://portal.cenbrap.com.br" class="btn btn-primary">Entrar no Portal do Aluno</a></p>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

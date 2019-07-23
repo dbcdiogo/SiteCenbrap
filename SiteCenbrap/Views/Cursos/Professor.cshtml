@@ -1,0 +1,14 @@
+﻿@model Biblioteca.Entidades.Titulo_curso_professor
+<div class="col-md-12 col-xs-12">
+     <!--<div class="col-md-4 col-xs-12">
+       <img src="~/Cursos/Foto/@Model.Titulo_curso_professor_id/?tamanho=500" class="img-responsive">
+
+    </div>-->
+    <div class="col-md-12 col-xs-12">
+        <h2>@Model.professor</h2>
+        <h4>@Model.especializacao</h4>
+        <p>@Html.Raw(Model.curriculo.Replace("\n", "<BR>"))</p>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>

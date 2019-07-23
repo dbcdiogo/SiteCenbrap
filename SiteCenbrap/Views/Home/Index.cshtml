@@ -1,31 +1,377 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model SiteCenbrap.Models.InicialView
+@{
+    ViewBag.Title = "";
+    int i = 1;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div class="container busca"><div class="div-formulario-cursos"></div></div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+@foreach (var b in Model.banners)
+{
+    @Html.Raw("<div class='banner" + (i == 1 ? "" : " hide") + "' position='" + i + "' link='" + b.txlink + "' style=\"background-image:url('/Home/BannerImg/" + b.idbanner + "')\">");
+    @Html.Raw("<a class='arrow arrow_left hidden-xs' role='button'><span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span><span class='sr-only'>Anterior</span></a>");
+    @Html.Raw("<a class='arrow arrow_right hidden-xs' role='button'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><span class='sr-only'>Próxima</span></a>");
+    @Html.Raw("<section id='scroll' class='hidden-xs'><a href='#section'><span></span><span></span><span></span></a></section></div>");
+    i++;
+}
+
+<div class="sobreCenbrap row" id="section">
+
+    <div class="container">
+
+        <div class="col-md-12 col-xs-12 text-center">
+
+            <h1>Sobre o CENBRAP</h1>
+
+            <div class="flex-columns">
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><a href="http://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MjE4NzI=" target="_blank"><img src="~/Images/reconhecimento.png" height="100" /></a></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><a style="color:#595858 !important;" href="http://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MjE4NzI=" target="_blank"><strong>Reconhecimento do MEC</strong></a></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><a style="color:#595858 !important;" href="http://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MjE4NzI=" target="_blank">Credibilidade reconhecida e eficácia legal</a></div>
+                </div>
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/medicos.png" height="100" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>+ de 5.000 médicos</strong></div>
+                    <div class="col-md-12 col-xs-12 margin-top">Milhares de alunos atestam nossa qualidade</div>
+                </div>
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/professores.png" height="100" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>Professores renomados</strong></div>
+                    <div class="col-md-12 col-xs-12 margin-top">Representantes das melhores universidades</div>
+                </div>
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/provas.png" height="100" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>Provas e Concursos</strong></div>
+                    <div class="col-md-12 col-xs-12 margin-top">Alto índice de aprovação entre os alunos</div>
+                </div>
+                <!--<div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/compromisso.png" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>Compromisso assumido</strong></div>
+                    <div class="col-md-12 col-xs-12 margin-top">Matricule-se para 1ª aula da Pós e continue apenas se gostar</div>
+                </div>
+                <div class="col-md-3 col-xs-6 espacamento-superior">
+                    <div class="col-md-12 col-xs-12"><img src="~/Images/local.png" /></div>
+                    <div class="col-md-12 col-xs-12 margin-top"><strong>Estamos perto de você</strong></div>
+                    <div class="col-md-12 col-xs-12 margin-top">Nossos cursos estão em várias cidades</div>
+                </div>-->
+
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <div class="mapa row">
+
+        <div class="container">
+            <div class="col-md-12 col-xs-12">
+                <div class="col-md-6 col-xs-12">
+
+                    <div class="col-md-12 col-xs-12">
+                        <h2>Notícias do CENBRAP</h2>
+
+                        @foreach (var n in Model.noticias)
+                        {
+                            <div class="NoticiasTable">
+                                <p>
+                                    @n.titulo
+                                </p>
+                            </div>
+                        }
+
+                    </div>
+                    <a href="~/Home/Noticias" class="btn btn-lg btn-success margin-bottom" style="position:relative; z-index:999999">Saiba mais</a>
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="col-md-5 col-md-offset-1">
+
+                    <h2>Estamos perto de você</h2>
+                    <p>&nbsp;</p>
+                    <div>
+                        <div class="col-md-10 col-xs-10 nopadding">
+                            <select id="mapa-cidade" title="Selecione sua cidade">
+                                @foreach (var c in Model.cidades)
+                                {
+                                    <text>
+                                        @if (c.id != 28)
+                                        {
+                                            <option value="@c.link">@c.titulo</option>
+                                        }
+                                    </text>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-xs-2"><button type="button" id="Cidade-OK" class="btn btn-ok">OK</button></div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <center><img src="~/Images/mapa.png" class="img-responsive" usemap="#Map" /></center>
+                    <map name="Map">
+                        <area shape="circle" coords="98,79,9" href="/Cidades/Manaus/" title="Manaus">
+                        <area shape="circle" coords="217,48,7" href="/Cidades/Belem/" title="Belém">
+                        <area shape="circle" coords="311,71,6" href="/Cidades/Fortaleza/" title="Fortaleza">
+                        <area shape="circle" coords="342,110,9" href="/Cidades/Recife/" title="Recife">
+                        <area shape="circle" coords="310,151,7" href="/Cidades/Salvador/" title="Salvador">
+                        <area shape="circle" coords="152,163,8" href="/Cidades/Cuiaba/" title="Cuiabá">
+                        <area shape="circle" coords="223,290,10" href="/Cidades/Florianopolis/" title="Florianópolis">
+                        <area shape="circle" coords="274,237,6" href="/Cidades/RiodeJaneiro/" title="Rio de Janeiro">
+                        <area shape="circle" coords="296,212,8" href="/Cidades/Vitoria/" title="Vitória">
+                        <area shape="circle" coords="166,220,9" href="/Cidades/CampoGrande/" title="Campo Grande">
+                        <area shape="circle" coords="209,261,9" href="/Cidades/Curitiba/" title="Curitiba">
+                        <area shape="circle" coords="228,175,8" href="/Cidades/Brasilia/" title="Brasília">
+                        <area shape="circle" coords="211,189,10" href="/Cidades/Goiania/" title="Goiânia">
+                        <area shape="circle" coords="262,203,9" href="/Cidades/BeloHorizonte/" title="Belo Horizonte">
+                        <area shape="circle" coords="227,201,7" href="/Cidades/Uberlandia/" title="Uberlândia">
+                        <area shape="circle" coords="254,239,8" href="/Cidades/SaoJoseDosCampos" title="São José dos Campos">
+                        <area shape="circle" coords="241,249,7" href="/Cidades/SaoPaulo/" title="São Paulo">
+                        <area shape="circle" coords="226,237,6" href="/Cidades/Campinas/" title="Campinas">
+                        <area shape="circle" coords="218,223,6" href="/Cidades/RibeiraoPreto/" title="Ribeirão Preto">
+                        <area shape="circle" coords="203,217,6" href="/Cidades/SaoJoseDoRioPreto" title="São José do Rio Preto">
+                        <area shape="circle" coords="261,57,8" href="/Cidades/SaoLuis" title="São Luís">
+                        <area shape="circle" coords="197,243,7" href="/Cidades/Londrina" title="Londrina">
+                        <area shape="circle" coords="203,313,10" href="/Cidades/PortoAlegre" title="Porto Alegre">
+                    </map>
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    <div class="Cursos row">
+
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12 text-center">
+
+                <h2>PÓS-GRADUAÇÕES</h2>
+                <div class="flex-columns">
+                    @foreach (var t in Model.posgraduacoes)
+                    {
+                        <div class="col-md-3 col-xs-12 curso col-centered">
+                            <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12"><img src="~/Cursos/banner/@t.id/" /></a>
+                            <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12 margin-top">@t.titulo</a>
+                        </div>
+                    }
+                </div>
+
+                <!--<div class="col-md-12 col-xs-12 margin-top">
+                    <a href="/PosGraduacoes/" class="btn btn-ok pull-right">Saiba mais</a>
+                </div>-->
+            </div>
+
+        </div>
+
     </div>
-</div>
+
+    <div class="row certificacao espacamento-superior60 porquefazer">
+        <div class="container">
+            <div class="col-md-6 col-xs-10 certificacao-title">Por que fazer uma pós-graduação médica?</div>
+            <div class="col-md-12 col-xs-12">
+                <div class="col-md-3 col-xs-12"><img src="/Images/fazer_pos.png" height="200"></div>
+                <div class="col-md-9 col-xs-12 fs20">
+                    Porque em tempos de "Dr. Google", a educação médica continuada se tornou obrigatória. Uma pesquisa feita entre os alunos do Cenbrap mostrou que a maior parte deles (67% da amostra) já são especialistas em alguma área, mas buscam um aprendizado contínuo e reconhecido pelo MEC, além de networking e preparação para provas de título de especialista.
+                    <div class="pull-right margin-top-50"><a href="/Faq/" class="btn btn-lg btn-success">Saiba mais</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Cursos row">
+
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12 text-center">
+
+                <h2>OUTROS CURSOS PRESENCIAIS</h2>
+                <div class="flex-columns">
+                    @foreach (var t in Model.workshops)
+                    {
+                        <div class="col-md-3 col-xs-12 curso col-centered">
+                            <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12"><img src="~/Cursos/banner/@t.id/" /></a>
+                            <a href="/Cursos/@t.link/" class="col-md-12 col-xs-12 margin-top">@t.titulo</a>
+                        </div>
+                    }
+                </div>
+                <!--<div class="col-md-12 col-xs-12 margin-top">
+                    <a href="/Workshops/" class="btn btn-ok pull-right">Saiba mais</a>
+                </div>-->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="Cursos row">
+
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12 text-center">
+
+                <h2>CURSOS EAD</h2>
+
+                <div class="flex-columns">
+                    @foreach (var t in Model.eads)
+                    {
+                        <div class="col-md-3 col-xs-12 curso col-centered">
+                            <a href="/Turma/@t.titulo1/" class="col-md-12 col-xs-12">
+                                <img src="~/Cursos/banner/@t.id/" />
+                                @if (t.link_trailer != "")
+                                {
+                                    <span class="trailer">ASSISTA AO TRAILER</span>
+                                }
+                            </a>
+                            <a href="/Turma/@t.titulo1/" class="col-md-12 col-xs-12 margin-top">@t.titulo</a>
+                        </div>
+
+                    }
+                </div>
+                <!--<div class="col-md-12 col-xs-12 margin-top">
+                    <a href="/EaD/" class="btn btn-ok pull-right">Saiba mais</a>
+                </div>-->
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+    <div class="Ligamos row">
+        <div class="container">
+            <div class="col-md-12 col-xs-12 text-center">
+
+                <h2><span class="glyphicon glyphicon-earphone"></span> LIGAMOS PARA VOCÊ</h2>
+                <p>Se interessou por nossos cursos? Entramos em contato com você</p>
+
+                <div class="form-inline">
+                    <input class="form-control" type="text" id="LigamosNome" placeholder="Nome" />
+                    <input class="form-control" type="email" id="LigamosEmail" placeholder="E-mail" />
+                    <input class="form-control" type="text" id="LigamosTelefone" placeholder="Telefone (XX)XXXXX-XXXX ou (XX)XXXX-XXXX" />
+                    <button class="btn btn-ok" type="button" id="LigamosOk">OK</button>
+                    <span id="LigamosErro"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="ProximasAulasCanal row">
+
+        <div class="container">
+
+            <div class="col-md-5 col-xs-12 Canal">
+                <h2 class="text-center">Estão falando por aí</h2>
+                <div id="depoimentos" class="carousel slide margin-top" data-ride="carousel">
+
+                    <div class="carousel-inner" role="listbox">
+                        @{ int cont = 0; }
+                        @foreach (var d in Model.depoimentos)
+                        {
+                            cont++;
+                            <div class="item @(cont == 1 ? "active" : "")">
+                                <p>@d.texto</p>
+                                <p><strong>@d.nome</strong> <br /> <span class="DepoimentosCurso">@d.curso @d.cidade</span></p>
+                            </div>
+                        }
+
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#depoimentos" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="right carousel-control" href="#depoimentos" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Próxima</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-5 col-md-offset-2 col-xs-12 Canal">
+                <div class="col-md-12 colxs-12">
+                    <h2>Canal CENBRAP</h2>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rJ1b9Ux9rpc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="pull-right">
+                        <script src="https://apis.google.com/js/platform.js"></script>
+
+                        <div class="g-ytsubscribe pull-right" data-channel="cenbrap" data-layout="default" data-count="hidden"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="Eventos row">
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12 text-center">
+
+                <h2>Próximo(s) evento(s)</h2>
+
+@*<div class="col-md-4 col-xs-12 evento-div">
+        <div class="col-md-12 col-xs-12 congresso">
+            <a href="https://www.congressomedicina.com.br"><br />CONGRESSO<br />Medicina do Trabalho</a>
+        </div>
+        <a href="https://www.congressomedicina.com.br" class="inscreva">Inscreva-se</a>
+    </div>
+
+    <div class="col-md-4 col-xs-12 evento-div">
+        <div class="col-md-12 col-xs-12 simposiomedicina">
+            <a href="https://www.simposiomedicina.com.br"><br />SIMPÓSIO<br />Medicina do Trabalho</a>
+        </div>
+        <a href="https://www.simposiomedicina.com.br" class="inscreva">Inscreva-se</a>
+    </div>*@
+
+    <div class="col-md-3 col-xs-12 evento-div"></div>
+    <div class="col-md-6 col-xs-12 evento-div">
+        <div class="col-md-12 col-xs-12 congresso">
+            <a href="https://www.congressomedicina.com.br" target="_blank"><br />V CBMTPM</a>
+        </div>
+        <a href="https://www.congressomedicina.com.br" target="_blank" class="inscreva">Inscreva-se</a>
+    </div>
+    <div class="col-md-3 col-xs-12 evento-div"></div>
+
+    </div>
+
+    </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    @section scripts {
+        @if (DateTime.Now < Convert.ToDateTime("28/05/2018"))
+        {
+            <script type="text/javascript">
+                console.log("COMUNICADO URGENTE");
+                $(document).ready(function () {
+                    texto = "<p class='text-center'><strong>COMUNICADO URGENTE</strong></p>";
+                    texto += "<p class='text-center'>Em virtude da greve dos caminhoneiros e suas repercussões, comunicamos o adiamento de todas as aulas que estavam agendadas para <strong>26 e 27/05/2018</strong>.</p>";
+                    texto += "<p></p>";
+                    texto += "<p class='text-center'><a href='/ComunicadoUrgente/'>Saiba mais</a></p>";
+                    $("#myModal1 .modal-body").html(texto);
+                    $("#myModal1 .modal-dialog").removeClass("modal-lg");
+                    $("#myModal1").modal("show");
+                });
+            </script>
+        }
+
+    }
+

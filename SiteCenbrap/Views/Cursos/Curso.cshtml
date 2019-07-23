@@ -1,0 +1,996 @@
+﻿@model SiteCenbrap.Models.CursoView
+@{
+    ViewBag.Title = Model.curso.titulo;
+    ViewBag.Title = Model.curso.titulo;
+    ViewBag.Image = "http://cenbrap.com.br/Cursos/banner/" + @Model.titulo_curso.codigo;
+}
+
+@* Redireciona para página inicial caso o opção visualiza no site seja 'não'*@
+@if (Model.curso.visualiza_site == 0)
+{
+    Response.Redirect(Url.Action("Index", "Home"));
+}
+
+@* Redireciona para página inicial caso a data_fim do curso seja menor que a data atual*@
+@if (Model.curso.data_fim.Year != 1900)
+{
+    if (Convert.ToInt32(((Model.curso.data_fim - DateTime.Now).TotalDays)) < 0)
+    {
+        Response.Redirect(Url.Action("Index", "Home"));
+    }
+}
+
+<div class="col-md-12 col-xs-12 compartilhe2" style="text-align:right">
+    <span>
+        <a data-site="" href="#" onClick="CopyLink()"><img src="~/Images/share.png" title="Copiar link" alt="Copiar link"></a>
+        <a data-site="" href="http://www.facebook.com/sharer.php?u=@Request.Url.AbsoluteUri" target="_blank"><img src="~/Images/facebook.png" title="Facebook" alt="Share on Facebook"></a>
+        <a data-site="" href="http://twitter.com/share?url=@Request.Url.AbsoluteUri&amp;text=@Model.curso.titulo" target="_blank"><img src="~/Images/twiter.png" title="Twitter" alt="Tweet about this on Twitter"></a>
+        <a data-site="" href="https://plus.google.com/share?url=@Request.Url.AbsoluteUri" target="_blank"><img src="~/Images/google.png" title="Google+" alt="Share on Google+"></a>
+        <a class="compartilhar-whatsapp" data-site="" href="whatsapp://send?text=Saiba mais sobre o curso de @Model.curso.titulo.Replace(" ","%20") no site @Request.Url.AbsoluteUri" target="_blank"><img src="~/Images/whatsapp2.png" title="Whatsapp" alt="Share on Whatsapp"></a>
+    </span>
+</div>
+
+<div class="row cursos-banner" codigo="@Model.curso.titulo_curso.codigo" cidade="@Model.curso.cidade_codigo.codigo">
+    <div class="container">
+
+        <h1 class="white">
+            @Model.curso.titulo
+            @if (Model.curso.tipo != 2)
+            {
+                <label>(* curso presencial)</label>
+            }
+            else
+            {
+                <label>(* 100% online - Carga horária @Model.curso.carga_horaria.ToString()h)</label>
+            }
+        </h1>
+
+        @if (@Model.curso.vagas_esgotadas == 1)
+        {
+            if ((Model.curso.codigo == 454) || (Model.curso.codigo == 464))
+            {
+                <a href="/Turma/IME14SAO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+            }
+            else
+            {
+                if (Model.curso.codigo == 406)
+                {
+                    <a href="/Turma/PS5RIO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                }
+                else
+                {
+                    if (Model.curso.codigo == 407)
+                    {
+                        <a href="/Turma/PS7BHZ/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                    }
+                    else
+                    {
+                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                    }
+                }
+
+            }
+        }
+        else
+        {
+            if (Model.qtd >= Model.curso.total_alunos)
+            {
+                <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+            }
+            else
+            {
+                @*<a href="/Turma/@Model.curso.titulo1/Inscreva/" class="btn btn-pos margin-top-50">@Html.Raw(Model.texto_button)</a>*@
+                <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">@Html.Raw(Model.texto_button)</a>
+            }
+
+        }
+
+        @if (Model.curso.ultimas_vagas == 1)
+        {
+            <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50" style="float:right">ÚLTIMAS VAGAS</a>
+        }
+
+    </div>
+</div>
+
+@if ((Model.curso.tipo != 2) && (Model.curso.inicio_confirmado == 0))
+{
+    <div class="row certificacao espacamento-superior60">
+        <div class="container">
+            <div class="col-md-6 col-xs-10 certificacao-title">E se eu me matricular e a turma não se formar?</div>
+            <div class="col-md-12 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    A confirmação da turma está condicionada a um número mínimo de alunos confirmados (matriculados). O comunicado oficial de abertura (ou não) da turma será enviado para o e-mail cadastrado do aluno até, no máximo, a terça-feira que antecede a data provável de início. Havendo adiamento, o CENBRAP se compromete, para os que quiserem desistir do curso, a devolver o valor integral pago pela matrícula em até 3 dias úteis, contados à partir da comunicação da desistência.
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.curso.tipo != 2)
+{
+    <div class="row IconeCursos">
+
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12 text-center">
+                <div class="flex-columns">
+
+                    @if (Model.curso.tipo == 0)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><a href="http://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MjE4NzI=" target="_blank"><img src="~/Images/icone_selo_mec.png" /></a></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3><a style="color:#00b484 !important" href="http://emec.mec.gov.br/emec/consulta-cadastro/detalhamento/d96957f455f6405d14c6542552b0f6eb/MjE4NzI=" target="_blank">Reconhecido pelo MEC</a></h3></div>
+                        </div>
+                    }
+
+                    @if (Model.curso.tipo == 1)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_selo_mec.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Certificação</h3></div>
+                            <div class="col-md-12 col-xs-12 margin-top">@Model.curso.certificadora_id.titulo_abreviado</div>
+                        </div>
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_horario_aulas.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Carga horária</h3></div>
+                            <div class="col-md-12 col-xs-12 margin-top">@Model.curso.carga_horaria.ToString()h</div>
+                        </div>
+                    }
+
+                    @if (Model.curso.ativo == 1)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_data_inicio.png" /></div>
+                            @if (Model.curso.tipo == 0)
+                            {
+                                <div class="col-md-12 col-xs-12 margin-top"><h3>@(Model.curso.inicio_confirmado == 1 ? "Data" : "Previsão") de início</h3></div>
+                                <div class="col-md-12 col-xs-12 margin-top">@Model.curso.Data()</div>
+                            }
+                            else
+                            {
+                                <div class="col-md-12 col-xs-12 margin-top"><h3>Data(s) @(Model.curso.inicio_confirmado == 1 ? "confirmada(s)" : "prevista(s)")</h3></div>
+                                <div class="col-md-12 col-xs-12 margin-top">@Html.Raw(Model.curso.textoData.Replace("\n", "<BR>"))</div>
+                            }
+
+                        </div>
+                    }
+                    else
+                    {
+                        if (Model.curso.tipo == 0)
+                        {
+                            <div class="col-md-3 col-xs-6 espacamento-superior">
+                                <div class="col-md-12 col-xs-12"><img src="~/Images/icone_data_inicio.png" /></div>
+                                <div class="col-md-12 col-xs-12 margin-top"><h3>@(Model.curso.inicio_confirmado == 1 ? "Data" : "Previsão") de início</h3></div>
+                                <div class="col-md-12 col-xs-12 margin-top">@Model.data_prevista</div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3 col-xs-6 espacamento-superior">
+                                <div class="col-md-12 col-xs-12"><img src="~/Images/icone_data_inicio.png" /></div>
+                                <div class="col-md-12 col-xs-12 margin-top"><h3>@(Model.curso.inicio_confirmado == 1 ? "Data" : "Previsão") de início</h3></div>
+                                <div class="col-md-12 col-xs-12 margin-top">@Html.Raw(Model.curso.textoData.Replace("\n", "<BR>"))</div>
+                            </div>
+                        }
+                    }
+                    @if (Model.curso.tipo != 2)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_cidade.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Cidade</h3></div>
+                            <div class="col-md-12 col-xs-12 margin-top">@Model.curso.cidade</div>
+                        </div>
+                    }
+                    @if (Model.curso.tipo == 0)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_aulas_fds.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Duração</h3></div>
+                            <div class="col-md-12 col-xs-12 margin-top">
+                                @if (Model.curso.codigo == 390)
+                                {
+                                    <text>
+                                        @Model.curso.qtd_parcelas meses (2 finais de semana por mês)
+                                    </text>
+                                }
+                                else
+                                {
+                                    <text>
+                                        @Model.curso.qtd_parcelas meses (1 fim de semana por mês)
+                                    </text>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.curso.tipo == 0)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_horario_aulas.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Horário das aulas</h3></div>
+                            <div class="col-md-12 col-xs-12 margin-top">Sáb: 08h - 18h30<br />Dom: 08h - 14h30</div>
+                        </div>
+                    }
+
+                    <div class="col-md-3 col-xs-6 espacamento-superior">
+                        <div class="col-md-12 col-xs-12"><img src="~/Images/icone_investimento.png" /></div>
+                        <div class="col-md-12 col-xs-12 margin-top"><h3>Investimento</h3></div>
+                        <div class="col-md-12 col-xs-12 margin-top">
+                            @if (Model.curso.codigo == 349)
+                            {
+                                <text>
+                                    R$ @Model.curso.Valor().ToString("N2") <br />(*à vista ou parcelado)
+                                </text>
+                            }
+                            else
+                            {
+                                <text>
+                                    @Model.curso.qtd_parcelas parcela(s) de R$ @Model.curso.Valor().ToString("N2")
+                                </text>
+                            }
+                        </div>
+                    </div>
+
+
+                    @if (Model.curso.tipo != 2)
+                    {
+                        <div class="col-md-3 col-xs-6 espacamento-superior">
+                            <div class="col-md-12 col-xs-12"><img src="~/Images/icone_local_aulas.png" /></div>
+                            <div class="col-md-12 col-xs-12 margin-top"><h3>Local das aulas</h3></div>
+                            @if (Model.curso.tipo != 2)
+                            {
+                                <div class="col-md-12 col-xs-12 margin-top">
+
+                                    @if (Model.hotel != null)
+                                    {
+                                        <text>
+                                            @Model.hotel.txhotel
+                                            <br /><a href="@Model.hotel.txlink" target="_blank">ver no mapa</a>
+                                        </text>
+                                    }
+                                    else
+                                    {
+                                        if ((Model.curso.codigo == 363) || (Model.curso.codigo == 378) || (Model.curso.codigo == 386))
+                                        {
+                                            <text>
+                                                CAISM - Santa Casa de São Paulo
+                                                <br /><a href="https://goo.gl/maps/2x49xfGPMxC2" target="_blank">ver no mapa</a>
+                                            </text>
+                                        }
+                                        else
+                                        {
+                                            if ((Model.curso.codigo == 388) || (Model.curso.codigo == 398) || (Model.curso.codigo == 405) || (Model.curso.codigo == 422))
+                                            {
+                                                <text>
+                                                    Clínica ASMETRO
+                                                    <br /><a href="https://goo.gl/maps/wFfgpmxyAHA2" target="_blank">ver no mapa</a>
+                                                </text>
+                                            }
+                                            else
+                                            {
+                                                if (Model.curso.codigo == 403)
+                                                {
+                                                    <text>
+                                                        CAISM Philippe Pinel
+                                                        <br /><a href="https://goo.gl/maps/z63ADNvRqVv" target="_blank">ver no mapa</a>
+                                                    </text>
+                                                }
+                                                else
+                                                {
+
+                                                    if (Model.curso.codigo == 401)
+                                                    {
+                                                        <text>
+                                                            Grand Mercure Ibirapuera
+                                                            <br /><a href="https://goo.gl/maps/tpg7Fp4xqf52" target="_blank">ver no mapa</a>
+                                                        </text>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (Model.curso.codigo == 430)
+                                                        {
+                                                            <text>
+                                                                Centro de Tratamento Bezerra de Menezes
+                                                                <br /><a href="https://goo.gl/maps/Z7RegyAymd92" target="_blank">ver no mapa</a>
+                                                            </text>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Model.curso.cidade_codigo.local
+                                                            if (Model.curso.cidade_local.link_google_maps != "")
+                                                            {
+                                                                <br /><a href="@Model.curso.cidade_local.link_google_maps" target="_blank">ver no mapa</a>
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-12 col-xs-12 margin-top">@Model.curso.endereco_local</div>
+                            }
+                        </div>
+                    }
+
+                    <div class="col-md-3 col-xs-6 espacamento-superior">
+                        <div class="col-md-12 col-xs-12"><img src="~/Images/icone_publico_alvo.png" /></div>
+                        <div class="col-md-12 col-xs-12 margin-top"><h3>Público-alvo</h3></div>
+                        <div class="col-md-12 col-xs-12 margin-top">@Html.Raw(Model.titulo_curso.publico_alvo)</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                @if (@Model.curso.vagas_esgotadas == 1)
+                {
+                    if ((Model.curso.codigo == 454) || (Model.curso.codigo == 464))
+                    {
+                        <a href="/Turma/IME14SAO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                    }
+                    else
+                    {
+                        if (Model.curso.codigo == 406)
+                        {
+                            <a href="/Turma/PS5RIO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                        }
+                        else
+                        {
+                            if (Model.curso.codigo == 407)
+                            {
+                                <a href="/Turma/PS7BHZ/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                            }
+                            else
+                            {
+                                <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (Model.qtd >= Model.curso.total_alunos)
+                    {
+                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                    }
+                    else
+                    {
+                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">@Html.Raw(Model.texto_button)</a>
+                    }
+                }
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+}
+
+@if (Model.curso.codigo == 403)
+{
+    <div class="row AssistaPrimeira">
+        <div class="container">
+            <div class="col-md-12 col-xs-12">
+                <h2 class="h2" style="color: #202020;display: block;font-family: Arial;font-size: 30px;font-weight: bold;line-height: 100%;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;">
+                    <b>
+                        <span>INDICAÇÕES PARA HOSPEDAGEM:</span>
+                    </b>
+                </h2>
+                <B>IBIS STYLES BARRA FUNDA:</B> <em><a href="https://goo.gl/maps/fFVxgXwrBbr" target="_blank" style="color: #336699;font-weight: normal;text-decoration: underline;">Clique aqui para ver o mapa</a></em>
+                <br>
+                <B>IBIS SÃO PAULO EXPO:</B> <em><a href="https://goo.gl/maps/XdDxHLBjM7Q2" target="_blank" style="color: #336699;font-weight: normal;text-decoration: underline;">Clique aqui para ver o mapa</a></em>
+                <br>
+                <B>HOLIDAY INN ANHEMBI:</B><em><a href="https://goo.gl/maps/bfSbYWPaPDD2" target="_blank" style="color: #336699;font-weight: normal;text-decoration: underline;">Clique aqui para ver o mapa</a></em><br>
+                <br>
+                <I>Obs.: O Cenbrap não tem nenhum acordo com hotéis. </I>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (Model.curso.tipo == 0)
+{
+    <div class="row AssistaPrimeira">
+        <div class="container">
+            <div class="col-md-12 col-xs-12">
+                <div class="col-md-2 col-md-offset-2 hidden-xs">
+                    <div class="compromisso"></div>
+                </div>
+                <div class="col-md-8 col-xs-12 espacamento-superior">
+                    <strong>MATRICULE-SE PARA PRIMEIRA AULA</strong><br>
+                    e continue apenas se gostar
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="row certificacao espacamento-superior60 porquefazer">
+            <div class="container">
+                <div class="col-md-6 col-xs-10 certificacao-title">Por que fazer uma pós-graduação médica?</div>
+                <div class="col-md-12 col-xs-12">
+                    <div class="col-md-3 col-xs-12"><img src="/Images/fazer_pos.png" height="200"></div>
+                    <div class="col-md-9 col-xs-12 fs20">
+                        Porque em tempos de "Dr. Google", a educação médica continuada se tornou obrigatória. Uma pesquisa feita entre os alunos do Cenbrap mostrou que a maior parte deles (67% da amostra) já são especialistas em alguma área, mas buscam um aprendizado contínuo e reconhecido pelo MEC, além de networking e preparação para provas de título de especialista.
+                        <div class="pull-right margin-top-50"><a href="/Faq/" class="btn btn-lg btn-success">Saiba mais</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>*@
+}
+
+@if (Model.curso.tipo == 0)
+{
+    <div class="tabs row">
+
+        <div class="container">
+            <div class="col-md-12 col-xs-12">
+
+                <div class="col-md-12">
+
+                    <div class="row">
+
+                        <div class="tabs-header" role="tablist">
+                            <a href="#1" aria-controls="1" role="tab" data-toggle="tab" class="btn active"><span class="glyphicon glyphicon-book"></span><br><br>Disciplinas</a>
+                            <a href="#2" aria-controls="2" role="tab" data-toggle="tab" class="btn"><span class="glyphicon glyphicon-calendar"></span><br><br>Datas das aulas</a>
+                            <a href="#3" aria-controls="3" role="tab" data-toggle="tab" class="btn"><span class="glyphicon glyphicon-paperclip"></span><br>Documentos<br />necessários</a>
+                            <a href="#4" aria-controls="4" role="tab" data-toggle="tab" class="btn"><span class="glyphicon glyphicon-education"></span><br><br>Certificação</a>
+                            <a href="#5" aria-controls="5" role="tab" data-toggle="tab" class="btn"><span class="glyphicon glyphicon-question-sign"></span><br>Perguntas<br />frequentes</a>
+                        </div>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="1">
+                                <ul class="list-group-striped">
+                                    @foreach (var disc in Model.disciplinas)
+                                    {
+                                        <li>@disc.disciplina</li>
+                                    }
+                                </ul>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="2">
+                                @Html.Raw(Model.curso.textoData.Replace("\n", "<BR>"))
+                                @if (Model.curso.tipo == 0)
+                                {
+                                    <text>
+                                        @if (Model.curso.ativo == 0)
+                                        {
+                                            @Html.Raw("<br /><br />As datas das aulas serão divulgadas quando da abertura das matrículas para essa turma.<br /><br />Clique em \"Pré-reserva\", cadastre-se, e receba em seu e-mail o comunicado oficial de abertura das matrículas para essa turma, assim que isso ocorrer.")
+                                        }
+                                        else
+                                        {
+                                            if (Model.curso.codigo != 390)
+                                            {
+                                                @Html.Raw("<br /><br />As datas do ano seguinte serão divulgadas oportunamente.")
+                                            }
+                                        }
+                                    </text>
+                                }
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="3">
+                                <ul class="list-group-striped">
+                                    <li>Na primeira aula, o aluno deverá nos entregar os seguintes documentos:</li>
+                                    @if (Model.titulo_curso.codigo != 41)
+                                    {
+                                        <li>- uma cópia do diploma de graduação em medicina (frente e verso);</li>
+                                    }
+                                    <li>- uma cópia do documento de identificação que conste o número do CPF;</li>
+                                    <li>- uma cópia do comprovante de endereço de residência com data de emissão de, no máximo, de 3 meses (por exemplo: conta do celular, água ou luz).</li>
+                                </ul>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="4">
+                                <p style="line-height:35px;">
+                                    O curso é ministrado e certificado ("chancelado") pela própria Faculdade Cenbrap, instituição de ensino superior credenciada no Ministério da Educação (MEC) por força da Portaria MEC/GM n. 918/2018 (publicada no <a href="~/Images/Portaria 918.2018.jpg" target="_blank">Diário Oficial da União dia 10/09/2018</a>).
+                                    @*O curso é ministrado e certificado pelas Faculdades Unidas do Norte de Minas - FUNORTE (instituição de ensino superior pertencente ao grupo SOEBRAS, e mantenedora do Instituto de Ciências da Saúde - ICS), credenciada no MEC por força da Portaria n. 2.179 / 2000.<br><br>*@
+                                </p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="5">
+                                @{ int cont1 = 0;}
+                                @foreach (var faq in Model.faq)
+                                {
+                                    cont1++;
+                                    <div class="panel panel-faq">
+                                        <div class="panel-heading" role="tab" id="@("heading" + cont1)">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#@("accordion" + cont1)" href="#@("collapse" + cont1)" aria-expanded="true" aria-controls="#@("collapse" + cont1)">
+                                                    @faq.pergunta
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="@("collapse" + cont1)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + cont1)">
+                                            <div class="panel-body">
+                                                @Html.Raw(faq.resposta)
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                @if (@Model.curso.vagas_esgotadas == 1)
+                {
+                    if ((Model.curso.codigo == 454) || (Model.curso.codigo == 464))
+                    {
+                        <a href="/Turma/IME14SAO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                    }
+                    else
+                    {
+                        if (Model.curso.codigo == 406)
+                        {
+                            <a href="/Turma/PS5RIO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                        }
+                        else
+                        {
+                            if (Model.curso.codigo == 407)
+                            {
+                                <a href="/Turma/PS7BHZ/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                            }
+                            else
+                            {
+                                <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (Model.qtd >= Model.curso.total_alunos)
+                    {
+                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                    }
+                    else
+                    {
+                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">@Html.Raw(Model.texto_button)</a>
+                    }
+                }
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+}
+
+@if (Model.curso.tipo == 1)
+{
+    <div class="row Disciplinas espacamento-superior30">
+        <div class="container">
+            <div class="col-md-12 col-xs-12">
+                <h2 class="text-center"><span class="glyphicon glyphicon-book"></span> Programação</h2>
+                @if ((Model.curso.codigo == 370) || (Model.curso.codigo == 383) || (Model.curso.codigo == 384) || (Model.curso.codigo == 385) || (Model.curso.codigo == 423) || (Model.curso.codigo == 424))
+                {
+                    <div class="col-md-12 col-xs-12">
+                        @Html.Raw(Model.curso.texto.Replace("\n", "<BR>"))
+                    </div>
+                }
+                else
+                {
+                    <ul class="col-md-12 col-xs-12 list-group list-group-striped list-group-simbol">
+                        @foreach (var d in Model.disciplinas)
+                        {
+                            <li class="list-group-item">@d.disciplina</li>
+                        }
+                    </ul>
+                }
+                <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                    @if (@Model.curso.vagas_esgotadas == 1)
+                    {
+                        if ((Model.curso.codigo == 454) || (Model.curso.codigo == 464))
+                        {
+                            <a href="/Turma/IME14SAO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                        }
+                        else
+                        {
+                            if (Model.curso.codigo == 406)
+                            {
+                                <a href="/Turma/PS5RIO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                            }
+                            else
+                            {
+                                if (Model.curso.codigo == 407)
+                                {
+                                    <a href="/Turma/PS7BHZ/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                                }
+                                else
+                                {
+                                    <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                                }
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        if (Model.qtd >= Model.curso.total_alunos)
+                        {
+                            <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                        }
+                        else
+                        {
+                            <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">Quero me matricular</a>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    if (Model.curso.texto_curso.Replace("\n", "") != "")
+    {
+        <div class="row Disciplinas espacamento-superior30">
+            <div class="container">
+                <div class="col-md-12 col-xs-12">
+                    <h2 class="text-center"><span class="glyphicon glyphicon-book"></span> Características gerais</h2>
+                    <div class="col-md-12 col-xs-12">
+                        @Html.Raw(Model.curso.texto_curso.Replace("\n", ""))
+                    </div>
+                    <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                        @if (@Model.curso.vagas_esgotadas == 1)
+                        {
+                            if ((Model.curso.codigo == 454) || (Model.curso.codigo == 464))
+                            {
+                                <a href="/Turma/IME14SAO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                            }
+                            else
+                            {
+                                if (Model.curso.codigo == 406)
+                                {
+                                    <a href="/Turma/PS5RIO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                                }
+                                else
+                                {
+                                    if (Model.curso.codigo == 407)
+                                    {
+                                        <a href="/Turma/PS7BHZ/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            if (Model.qtd >= Model.curso.total_alunos)
+                            {
+                                <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                            }
+                            else
+                            {
+                                <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">Quero me matricular</a>
+                            }
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+}
+
+@if (Model.curso.tipo == 2)
+{
+
+    if (Model.curso.link_trailer != "")
+    {
+        <div style="padding-top:30px;">
+            <iframe src="@Model.curso.link_trailer" width="100%" class="ifr_vimeo" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+    }
+
+    <div class="row Disciplinas espacamento-superior30">
+        <div class="container">
+            <div class="col-md-12 col-xs-12">
+                <h2 class="text-center"><span class="glyphicon glyphicon-book"></span> Características gerais</h2>
+                <div class="col-md-12 col-xs-12">
+                    @if (Model.curso.texto.Substring(0, 4) == "<div")
+                    {
+                        @Html.Raw(Model.curso.texto)
+                    }
+                    else
+                    {
+                        @Html.Raw(Model.curso.texto.Replace("\n", "<br>"))
+                    }
+                </div>
+                <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                    @if (@Model.curso.vagas_esgotadas == 1)
+                    {
+                        if ((Model.curso.codigo == 454) || (Model.curso.codigo == 464))
+                        {
+                            <a href="/Turma/IME14SAO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                        }
+                        else
+                        {
+                            if (Model.curso.codigo == 406)
+                            {
+                                <a href="/Turma/PS5RIO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                            }
+                            else
+                            {
+                                if (Model.curso.codigo == 407)
+                                {
+                                    <a href="/Turma/PS7BHZ/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                                }
+                                else
+                                {
+                                    <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                                }
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        if (Model.qtd >= Model.curso.total_alunos)
+                        {
+                            <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                        }
+                        else
+                        {
+                            <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">Quero me matricular</a>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@if (Model.professores.Count > 0)
+{
+    <div class="Professores row">
+
+        <div class="container">
+
+            <div class="col-md-12 col-xs-12 text-center">
+
+                @if (Model.curso.tipo == 0)
+                {
+                    <h2 class="text-center"><span class="glyphicon glyphicon-education"></span> Surpreenda-se com nossos professores</h2>
+                }
+                @if (Model.curso.tipo == 1)
+                {
+                    <h2 class="text-center"><span class="glyphicon glyphicon-education"></span> Professor(es)</h2>
+                }
+                <div class="flex-columns">
+                    @foreach (var t in Model.professores)
+                    {
+                        <div class="col-md-3 col-sm-3 col-xs-6 margin-bottom col-centered">
+                            <!--<div class="col-md-12 col-xs-12"><img src="~/Cursos/Foto/@t.Titulo_curso_professor_id/?tamanho=200" class="professor img-responsive img-circle" /></div>-->
+                            <div class="col-md-12 col-xs-12 margin-top"><strong>@t.professor</strong></div>
+                            <div class="col-md-12 col-xs-12">@t.especializacao</div>
+                            <div class="col-md-12 col-xs-12 margin-top">
+                                <!--<a href="javascript:void(0);" class="btn btn-saiba-mais" onclick="Modal('/Professor/@t.Titulo_curso_professor_id/',@t.Titulo_curso_professor_id);">Saiba mais</a>-->
+                                <p><a href="javascript:void(0);" class="btn btn-curriculo" onclick="Modal('/Professor/@t.Titulo_curso_professor_id/',@t.Titulo_curso_professor_id);"><span class="glyphicon glyphicon-search"></span></a></p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+                @if (@Model.curso.vagas_esgotadas == 1)
+                {
+                    if ((Model.curso.codigo == 454) || (Model.curso.codigo == 464))
+                    {
+                        <a href="/Turma/IME14SAO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                    }
+                    else
+                    {
+                        if (Model.curso.codigo == 406)
+                        {
+                            <a href="/Turma/PS5RIO/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                        }
+                        else
+                        {
+                            if (Model.curso.codigo == 407)
+                            {
+                                <a href="/Turma/PS7BHZ/" class="btn btn-pos">VAGAS ESGOTADAS<br />CLIQUE AQUI E MATRICULE-SE NA PRÓXIMA TURMA</a>
+                            }
+                            else
+                            {
+                                <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (Model.qtd >= Model.curso.total_alunos)
+                    {
+                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">VAGAS ESGOTADAS<br />ENTRAR NA LISTA DE ESPERA?</a>
+                    }
+                    else
+                    {
+                        <a href="/Inscreva/@Model.curso.titulo1/" class="btn btn-pos margin-top-50">@Html.Raw(Model.texto_button)</a>
+                    }
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+}
+<div class="row Investimento">
+    <div class="container">
+        <h2 class="text-center">Investimento</h2>
+        <div class="row">
+            @if (Model.curso.matricula1 > 0)
+            {
+                <div class="col-md-4 col-xs-12">
+                    <p class="valor-taxa-matricula">Valor da taxa de matrícula:</p>
+                    <div class="matricula-valor">
+                        R$<br /><span>@Model.curso.matricula1*</span>
+                    </div>
+                    @if (Model.curso.ativo != 0)
+                    {
+                        if ((Model.curso.codigo != 370) && (Model.curso.codigo != 383) && (Model.curso.codigo != 384))
+                        {
+                            <p>*até a data @Model.curso.data_limite1.ToShortDateString(). Após essa data o valor da matrícula é de R$ @Model.curso.matricula.</p>
+                        }
+                    }
+                </div>
+            }
+
+            <div class="col-md-3 col-md-offset-1 col-xs-10 col-xs-offset-1 @(((Model.curso.tipo != 0) && (Model.titulo_curso.codigo != 32)) ? "col-centered" : "")">
+                @*<p class="valor-taxa-matricula">Valor da(s) parcela(s):</p>*@
+                <p>&nbsp;</p>
+                <div class="valor-parcelas">
+                    R$<br /><span>@Html.Raw(Model.curso.valor / Model.curso.qtd_parcelas)</span>
+                </div>
+                @if (Model.curso.codigo != 349)
+                {
+                    <div class="parcelas">
+                        @Model.curso.qtd_parcelas.ToString()x
+                    </div>
+                }
+            </div>
+            @if (Model.curso.tipo == 0)
+            {
+                <div class="col-md-3 col-md-offset-1 col-xs-8 col-xs-offset-2 GanheDesconto">
+                    Ganhe <br /> 10% <BR />de desconto*<br />
+                    <span>*pagamento total curso à vista.</span>
+                </div>
+            }
+            else
+            {
+                if (Model.titulo_curso.codigo == 32)
+                {
+                    <div class="col-md-3 col-md-offset-1 col-xs-8 col-xs-offset-2">
+                        <img src="~/Images/selo.png" /><br />
+                        <p>
+                            * Desconto será aplicado nas mensalidades;<br />
+                            ** O aluno (ex-aluno) de pós-graduações deverá constar sem restrições no sistema do Cenbrap.
+                            <br />&nbsp;
+                        </p>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 text-center" style="padding:15px 0px;">
+                @if (Model.curso.cartao)
+                {
+                    @Html.Raw("<img src='../../Images/cartoes.png' />");
+                }
+                else
+                {
+                    @Html.Raw("<img src='../../Images/boleto.png' />");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if ((Model.curso.codigo == 383) || (Model.curso.codigo == 384) || (Model.curso.codigo == 385))
+{
+    <div class="row certificacao espacamento-superior60">
+        <div class="container">
+            <div class="col-md-6 col-xs-10 certificacao-title">CONVENÇA SUA EMPRESA</div>
+            <div class="col-md-12 col-xs-12">
+                <div class="col-md-12 col-xs-12">
+                    Você quer fazer este curso, mas não sabe como justificar para sua empresa a importância da sua participação? O CENBRAP te ajuda!<br /><br />
+                    Envie aos diretores uma carta personalizada com as informações sobre o curso, e de como você poderá ser ainda mais útil para empresa após a realização dele.
+                    <br /><br /><center>
+                        <a href="~/Images/Carta aos diretores.docx" class="btn btn-pos font-responsive">ACESSE O MODELO DE "CARTA AO DIRETOR"</a>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="Contato Contato-curso row">
+    <div class="container">
+        <div class="col-md-12 col-xs-12">
+
+            <div class="col-md-6 col-xs-12 text-center contato-esquerda">
+                <h1><span class="glyphicon glyphicon-earphone"></span><br />TEM ALGUMA DÚVIDA?</h1>
+                <p>Entramos em contato com você</p>
+            </div>
+
+            <div class="col-md-6 col-xs-12 form-horizontal contato-direita">
+                <input class="form-control" type="text" id="ContatoNome" placeholder="Nome" />
+                <input class="form-control" type="email" id="ContatoEmail" placeholder="E-mail" />
+                <input class="form-control" type="text" id="ContatoTelefone" placeholder="Telefone (XX)XXXXX-XXXX ou (XX)XXXX-XXXX" />
+                <textarea class="form-control" placeholder="Mensagem" id="ContatoMensagem"></textarea>
+                <button class="btn btn-ok" type="button" id="ContatoOk">ENVIAR</button>
+                <span id="ContatoErro"></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row ProximasTurmas espacamento-superior30">
+    <div class="container">
+        <h1>Matricule-se. Ainda dá tempo!</h1>
+
+        @if (@Model.proximasTurmas.Count > 0)
+        {
+            <text>
+                @foreach (var p in Model.proximasTurmas)
+                {
+                    <div class="col-md-4 col-xs-12 ProximasAulasTable">
+                        <p>
+                            <br>
+                            <strong>@p.titulo</strong><br>
+                            <strong>@p.cidade</strong><br />
+                            @if (p.inicio_confirmado == 1)
+                            {
+                                <strong>Início confirmado: </strong>
+                            }
+                            else
+                            {
+                                <strong>Início previsto: </strong>
+                            }
+                            @p.data_inicio.ToShortDateString()
+                            <br>
+                            <a href="~/Turma/@p.titulo1/" class="btn btn-primary">Saiba mais</a>
+                        </p>
+                    </div>
+                }
+            </text>
+        }
+        else
+        {
+            <div class="col-md-12 col-xs-12 ProximasAulasTable">
+                <p><br /><br /><strong>Não há nova(s) turma(s) com matrículas abertas nesse momento.</strong></p>
+            </div>
+        }
+
+        <input type="text" value="@Request.Url.AbsoluteUri" id="tempurl" class="hide">
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Curso")
+}

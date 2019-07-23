@@ -1,0 +1,230 @@
+﻿@model Biblioteca.Entidades.Curso
+@{
+    if (Model.ativo == 1)
+    {
+        if (Model.vagas_esgotadas == 1)
+        {
+            ViewBag.Title = "Lista de Espera";
+        }
+        else
+        {
+            if (ViewBag.qtd >= Model.total_alunos)
+            {
+                ViewBag.Title = "Lista de Espera";
+            }
+            else
+            {
+                ViewBag.Title = "Matricular";
+            }
+        }
+    }
+    else
+    {
+        ViewBag.Title = "Pré-Reserva";
+    }
+
+}
+
+<div class="container margin-top-50">
+    <div class="container">
+        <div class="row">
+            <h1>@ViewBag.Title no curso @Model.titulo</h1>
+            <!--<p><a href="javascript:void(0);" onclick="showModal(@Model.codigo, event)" class="btn btn-default">Mais detalhes sobre o curso</a></p>-->
+        </div>
+    </div>
+</div>
+
+<div class="row margin-top">
+    <div class="container">
+
+        <div class="col-md-12 col-xs-12">
+            <input type="hidden" id="curso" value="@Model.codigo" />
+            <input type="hidden" id="curso_codigo" value="@Model.titulo1" />
+            <input type="hidden" id="cidade_link" value="@Model.cidade_codigo.link" />
+            <input type="hidden" id="titulo_curso_link" value="@Model.titulo_curso.link" />
+            <input type="hidden" id="curso" value="@Model.codigo" />
+            <div class="col-md-6 col-xs-12 matricula-esquerda">
+                <h1>Já sou cadastrado</h1>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <input class="form-control" type="text" id="CadastradoLogin" placeholder="Primeiro Nome" />
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <input class="form-control" type="password" id="CadastradoSenha" placeholder="Somente os números do seu CPF" />
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <button class="btn btn-ok" type="button" id="CadastradoEntrar">ENTRAR</button>
+                        <button class="btn btn-ok" type="button" id="CadastradoEsqueceu">ESQUECEU A SENHA?</button>
+                    </div>
+                </div>
+                <div id="form_envio" style="display: none;">
+                    <div class="form-horizontal well">
+                        <div id="form_envio_has"></div>
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;Sua senha será enviada para o seu e-mail cadastrado:</div>
+                        <div class="input-group">
+                            <input name="email_envio" type="text" id="email_envio" placeholder="E-mail" class="form-control" maxlength="100">
+                            <span class="input-group-btn">
+                                <button type="button" id="CadastroEnviaSenha" class="btn btn-default">Enviar</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12 form_erro">
+                    <div id="CadastradoErro"></div>
+                    <div class="clearfix"></div>
+                    <div id="ContatoMsg">Obs.: caso já tenha cadastro, utilize seu primeiro nome como <strong>login</strong> e somente os números do seu CPF como <Strong>senha</Strong>.</div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12 matricula-direita">
+                <h1>Novo Cadastro</h1>
+                <div class="row" id="cad1">
+                    <div class="col-md-12 col-xs-12">
+                        <input name="nome" class="form-control" type="text" id="nome" placeholder="Nome completo" value="">
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <input name="cpf" class="form-control" type="text" id="cpf" placeholder="CPF" value="" data-mask="000.000.000-00" maxlength="14">
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <select name="sexo" id="sexo" class="form-control">
+                            <option value="">Sexo</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-xs-3">
+                        <input name="ddd" class="form-control" type="text" id="ddd" placeholder="DDD" maxlength="2" data-mask="00">
+                    </div>
+                    <div class="col-md-4 col-xs-9">
+                        <input name="telefone" class="form-control" type="text" id="telefone" placeholder="Telefone" maxlength="10" data-mask="00000-0000" data-mask-reverse="true">
+                    </div>
+                    <div class="col-md-2 col-xs-3">
+                        <input name="ddd_celular" class="form-control" type="text" id="ddd_celular" placeholder="DDD" maxlength="2" data-mask="00">
+                    </div>
+                    <div class="col-md-4 col-xs-9">
+                        <input name="celular" class="form-control" type="text" id="celular" placeholder="Celular" maxlength="10" data-mask="00000-0000" data-mask-reverse="true">
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <input name="email" class="form-control" type="email" id="email" placeholder="E-mail" value="">
+                    </div>
+                    <div class="col-md-12 col-xs-12">
+                        <input name="emailc" class="form-control" type="email" id="emailc" placeholder="Confirmar E-mail" value="">
+                    </div>
+                </div>
+
+                @if (Model.ativo == 1)
+                {
+                    <div class="row" id="cad2">
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group">
+                                <input name="rg" class="form-control" type="text" id="rg" placeholder="RG">
+                                <span id="2via" class="input-group-addon"><input name="rg_2via" type="checkbox" id="rg_2via" value="1">  2ª Via</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group">
+                                <input name="rg_emissor" class="form-control" type="text" id="rg_emissor" placeholder="Emissor">
+                                <span id="Ex" class="input-group-addon">Ex: SSP-XX, CRM-XX</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <input name="data_nascimento" class="form-control" type="text" id="data_nascimento" placeholder="Data de Nascimento (DD/MM/AAAA)" maxlength="10" data-mask="00/00/0000">
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <div class="input-group">
+                                <span id="TextPcD" class="input-group-addon"><a title="Pessoa com Deficiência">PcD*</a></span>
+                                <span id="PcDnao" class="input-group-addon">
+                                    <input name="pne" type="radio" id="radio5" value="0" checked="checked"> Não
+                                </span>
+                                <span id="PcDsim" class="input-group-addon">
+                                    <input type="radio" name="pne" id="radio6" value="1"> Sim &nbsp;&nbsp;&nbsp;
+                                </span>
+                                <input name="pne_qual" class="form-control" type="text" id="pne_qual" size="10" maxlength="100" placeholder="Qual?">
+                            </div>
+                            <label style="font-size: 10px;">* PcD (<strong>P</strong>essoa <strong>c</strong>om <strong>D</strong>eficiência)</label>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <select name="conheceu" id="conheceu" class="form-control">
+                                <option value="">Como nos conheceu?</option>
+                                <option value="Site de busca">Site de busca</option>
+                                <option value="Jornal">Jornal</option>
+                                <option value="Amigos">Amigos</option>
+                                <option value="Outdoor">Outdoor</option>
+                                <option value="E-mail">E-mail</option>
+                                <option value="Cartaz/Folder">Cartaz/Folder</option>
+                                <option value="Convênios">Convênios</option>
+                                <option value="Rádio/TV">Rádio/TV</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12">
+                            <input name="cep" class="form-control" type="text" id="cep" placeholder="CEP (XXXXX-XXX)" maxlength="9" data-mask="00000-000">
+                        </div>
+                        <div class="col-md-8 col-xs-12" id="errorcep"></div>
+                        <div class="col-md-12 col-xs-12 hide" id="cep1">
+                            <input name="endereco" class="form-control" type="text" id="endereco" placeholder="Endereço" readonly>
+                        </div>
+                        <div class="col-md-5 col-xs-12 hide" id="cep2">
+                            <input name="bairro" class="form-control" type="text" id="bairro" placeholder="Bairro" readonly maxlength="50">
+                        </div>
+                        <div class="col-md-5 col-xs-12 hide" id="cep3">
+                            <input name="cidade" class="form-control" type="text" id="cidade" placeholder="Cidade" readonly maxlength="50">
+                        </div>
+                        <div class="col-md-2 col-xs-12 hide" id="cep4">
+                            <select name="estado" class="form-control" id="estado" readonly>
+                                <option value="">UF</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AM">AM</option>
+                                <option value="AP">AP</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MG">MG</option>
+                                <option value="MS">MS</option>
+                                <option value="MT">MT</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="PR">PR</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="RS">RS</option>
+                                <option value="SC">SC</option>
+                                <option value="SE">SE</option>
+                                <option value="SP">SP</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-xs-12 hide" id="cep5">
+                            <input name="numero" class="form-control" type="text" id="numero" placeholder="Número">
+                        </div>
+                        <div class="col-md-6 col-xs-12 hide" id="cep6">
+                            <input name="complemento" class="form-control" type="text" id="complemento" placeholder="Complemento">
+                        </div>
+                    </div>
+                }
+
+                <div class="col-md-12 col-xs-12">
+                    <button class="btn btn-ok" type="button" id="CadastroOk">CADASTRAR</button>
+                </div>
+                <div class="col-md-12 col-xs-12 form_erro">
+                    <div id="CadastradoErro2"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Formulario")
+    @Scripts.Render("~/bundles/Mask")
+}

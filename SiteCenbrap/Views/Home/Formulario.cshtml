@@ -1,0 +1,31 @@
+﻿<div class="container">
+
+    <div class="formulario-cursos">
+        <input type="hidden" class="form-tipo" value="0" />
+        <input type="hidden" class="form-cidade" value="0" />
+        <input type="hidden" class="form-curso" value="0" />
+
+        <div class="row">
+            <div class="btn-group col-md-12 col-xs-12" role="group">
+                <span class="btn btn-texto cursor-default">Informações e matrículas para:</span>
+                <button type="button" class="btn btn-tipo-active" onclick="FormTipo(0);" id="pos-graduacao">Pós-Graduações</button>
+                <button type="button" class="btn btn-tipo" onclick="FormTipo(1);" id="workshop">Outros Cursos Presenciais</button>
+                <button type="button" class="btn btn-tipo" onclick="FormTipo(2);" id="ead">Cursos EaD</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xs-12 form-group margin-top-20 div-cidade">
+                <select id="form_cidade" title="Selecione sua cidade">
+                    <option value="">Selecione sua cidade</option>
+                </select>
+            </div>
+            <div class="col-md-8 col-xs-12 form-group margin-top-20 div-curso">
+                <select id="form_curso" title="Selecione seu curso">
+                    <option value="">Selecione seu curso</option>
+                </select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>

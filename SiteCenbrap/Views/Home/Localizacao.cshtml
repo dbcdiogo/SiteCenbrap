@@ -1,0 +1,107 @@
+﻿@model SiteCenbrap.Models.InicialView
+
+<div class="container margin-top-50">
+    <div class="row">
+
+        <!--<div class="col-md-6 col-xs-12">
+            <h1>Onde estamos</h1><br /><br />
+            <strong>- Turmas em andamento:</strong><br />
+            >> Belém/PA<br />
+            >> Belo Horizonte/MG<br />
+            >> Brasília/DF<br />
+            >> Campo Grande/MS<br />
+            >> Cuiabá/MT<br />
+            >> Goiânia/GO<br />
+            >> Manaus/AM<br />
+            >> Ribeirão Preto/SP<br />
+            >> Rio de Janeiro/RJ<br />
+            >> São Paulo/SP<br />
+            >> Uberlândia/MG<br />
+            >> Vitória/ES<br /><br />   
+            
+            <strong>- Turmas em formação:</strong><br />
+            >> Belém/PA<br />
+            >> Belo Horizonte/MG<br />
+            >> Brasília/DF<br />
+            >> Campinas/SP<br />
+            >> Campo Grande/MS<br />
+            >> Cuiabá/MT<br />
+            >> Curitiba/PR<br />
+            >> Fortaleza/CE<br />
+            >> Goiânia/GO<br />
+            >> Manaus/AM<br />
+            >> Ribeirão Preto/SP<br />
+            >> Rio de Janeiro/RJ<br />
+            >> Salvador/BA<br />
+            >> São Paulo/SP<br />
+            >> Teresina/PI<br />
+            >> Uberlândia/MG<br />
+            >> Vitória/ES<br /><br />
+
+            <strong>- Turmas já concluídas:</strong><br />
+            >> Belém/PA<br />
+            >> Belo Horizonte/MG<br />
+            >> Brasília/DF<br />
+            >> Campinas/SP<br />
+            >> Campo Grande/MS<br />
+            >> Fortaleza/CE<br />
+            >> Goiânia/GO<br />
+            >> Governador Valadares/MG<br />
+            >> Rio de Janeiro/RJ<br />
+            >> São Paulo/SP<br />
+            >> Uberlândia/MG<br />
+            >> Vitória/ES<br /><br />
+        </div>-->
+        <div class="col-md-12 col-xs-12">
+            <h1>Onde estamos</h1><br /><br />
+            <div class="col-centered">
+                <div class="col-md-6 col-xs-10 nopadding">
+                    <select id="mapa-cidade" title="Selecione sua cidade" class="form-control">
+                        <option value="">Selecione sua cidade</option>
+                        @foreach (var c in Model.cidades)
+                        {
+                            <text>
+                            @if (c.id != 28)
+                            {
+                                <option value="@c.link">@c.titulo</option>
+                            }
+                            </text>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-2"><button type="button" id="Cidade-OK" class="btn btn-ok">OK</button></div>
+            </div>
+            <div class="espacamento-superior60 col-centered">
+                <center><img src="~/Images/mapa.png" class="img-responsive" usemap="#Map" /></center>
+                <map name="Map">
+                    <area shape="circle" coords="98,79,9" href="/Cidades/Manaus/" title="Manaus">
+                    <area shape="circle" coords="217,48,7" href="/Cidades/Belem/" title="Belém">
+                    <area shape="circle" coords="311,71,6" href="/Cidades/Fortaleza/" title="Fortaleza">
+                    <area shape="circle" coords="342,110,9" href="/Cidades/Recife/" title="Recife">
+                    <area shape="circle" coords="310,151,7" href="/Cidades/Salvador/" title="Salvador">
+                    <area shape="circle" coords="152,163,8" href="/Cidades/Cuiaba/" title="Cuiabá">
+                    <area shape="circle" coords="223,290,10" href="/Cidades/Florianopolis/" title="Florianópolis">
+                    <area shape="circle" coords="274,237,6" href="/Cidades/RiodeJaneiro/" title="Rio de Janeiro">
+                    <area shape="circle" coords="296,212,8" href="/Cidades/Vitoria/" title="Vitória">
+                    <area shape="circle" coords="166,220,9" href="/Cidades/CampoGrande/" title="Campo Grande">
+                    <area shape="circle" coords="209,261,9" href="/Cidades/Curitiba/" title="Curitiba">
+                    <area shape="circle" coords="228,175,8" href="/Cidades/Brasilia/" title="Brasília">
+                    <area shape="circle" coords="211,189,10" href="/Cidades/Goiania/" title="Goiânia">
+                    <area shape="circle" coords="262,203,9" href="/Cidades/BeloHorizonte/" title="Belo Horizonte">
+                    <area shape="circle" coords="227,201,7" href="/Cidades/Uberlandia/" title="Uberlândia">
+                    <area shape="circle" coords="254,239,8" href="/Cidades/SaoJoseDosCampos" title="São José dos Campos">
+                    <area shape="circle" coords="241,249,7" href="/Cidades/SaoPaulo/" title="São Paulo">
+                    <area shape="circle" coords="226,237,6" href="/Cidades/Campinas/" title="Campinas">
+                    <area shape="circle" coords="218,223,6" href="/Cidades/RibeiraoPreto/" title="Ribeirão Preto">
+                    <area shape="circle" coords="203,217,6" href="/Cidades/SaoJoseDoRioPreto" title="São José do Rio Preto">
+                    <area shape="circle" coords="261,57,8" href="/Cidades/SaoLuis" title="São Luís">
+                    <area shape="circle" coords="197,243,7" href="/Cidades/Londrina" title="Londrina">
+                    <area shape="circle" coords="203,313,10" href="/Cidades/PortoAlegre" title="Porto Alegre">
+
+                </map>
+            </div>
+        </div>
+
+    </div>
+</div>
+

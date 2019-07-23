@@ -1,0 +1,151 @@
+﻿@model Biblioteca.Entidades.Paginas
+<div class="container margin-top-50">
+    <div class="row">
+        @{
+            ViewBag.Title = Model.titulo;
+        }
+
+        <h1>@Model.titulo</h1>
+
+    </div>
+</div>
+
+<div class="container margin-top-50 trabalhe_conosco">
+    <div class="row">
+
+        <p>Preencha o formulário abaixo. Caso haja alguma possibilidade de parceria futura, oportunamente entraremos em contato.</p>
+
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="nome">Nome *</label>
+                    <input type="text" id="nome" placeholder="Nome" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-4 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="cidade">Cidade *</label>
+                    <input type="text" id="cidade" placeholder="Cidade" class="form-control" />
+                </div>
+            </div>
+            <div class="form-horizontal col-md-1 col-xs-12 col-md-offset-1">
+                <div class="form-group">
+                    <label class="control-label" for="estado">Estado</label>
+                    <select id="estado" class="form-control">
+                        <option value="">Sel.</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AM">AM</option>
+                        <option value="AP">AP</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="email">E-mail *</label>
+                    <input type="email" id="email" placeholder="E-mail" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="telefone">Telefone de Contato *</label>
+                    <input class="form-control" type="text" id="telefone" placeholder="Telefone (XX)XXXXX-XXXX ou (XX)XXXX-XXXX" maxlength="14">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="funcao">Função Pretendida</label>
+                    <select id="funcao" class="form-control">
+                        <option value="">Selecione</option>
+                        <option value="Professor(a)">Professor(a)</option>
+                        <option value="Representante Regional">Representante Regional</option>
+                    </select>                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="escolaridade">Escolaridade *</label>
+                    <select id="escolaridade" class="form-control">
+                        <option value="">Selecione</option>
+                        <option value="Pós-Doutor">Pós-Doutor</option>
+                        <option value="Doutor">Doutor</option>
+                        <option value="Mestre">Mestre</option>
+                        <option value="Especialista">Especialista</option>
+                        <option value="Ensino Superior Completo">Ensino Superior Completo</option>
+                        <option value="Ensino Médio Completo">Ensino Médio Completo</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="graduado">Graduado em qual curso?</label>
+                    <input type="text" id="graduado" placeholder="Graduado em qual curso?" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="objetivo">Objetivo / Experiência Profissional *</label>
+                    <textarea id="objetivo" placeholder="" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label class="control-label" for="observacao">Observação</label>
+                    <textarea id="observacao" placeholder="" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal col-md-6 col-xs-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-ok pull-left" id="btnEnviar">Enviar</button>
+                    <button type="button" class="btn btn-ok pull-right" id="btnLimpar">Limpar</button>
+                </div>
+            </div>
+        </div>
+        <div id="erroMsg"></div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/TrabalheConosco")
+}

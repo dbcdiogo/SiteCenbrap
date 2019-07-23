@@ -1,0 +1,157 @@
+﻿@model SiteCenbrap.Models.CidadeView
+@{
+    ViewBag.Title = Model.cidade.cidade + " / " + Model.cidade.estado;
+}
+<div class="banner-cidade" codigo="@Model.cidade.codigo">
+    <div class="container">
+        <div class="col-md-12 col-xs-12">
+            <h1>Cursos @(Model.cidade.codigo == 18 ? "no" : "em") @Model.cidade.cidade  / @Model.cidade.estado</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row Cursos">
+
+    <div class="container">
+
+    <h1 class="text-center">Pós-Graduação</h1>
+        <div class="flex-columns">
+        @foreach (var c in Model.posgraduacao)
+        {
+            <div class="col-md-3 col-xs-12 curso text-center col-centered">
+                <a href="/Turma/@c.titulo1/" class="col-md-12 col-xs-12"><img src="~/Cursos/banner/@c.id/" /></a>
+                <a href="/Turma/@c.titulo1/" class="col-md-12 col-xs-12 margin-top">@c.titulo</a>
+            </div>
+        }
+        </div>
+        <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+            <a href="/Inscreva/Cidade/@Model.cidade.codigo" class="btn btn-pos curso-matricule-se-ja">Quero me matricular</a>
+        </div>
+    </div>
+</div>
+
+<div class="row certificacao espacamento-superior60 porquefazer">
+    <div class="container">
+        <div class="col-md-6 col-xs-10 certificacao-title">Por que fazer uma pós-graduação médica?</div>
+        <div class="col-md-12 col-xs-12">
+            <div class="col-md-3 col-xs-12"><img src="/Images/fazer_pos.jpg" height="264"></div>
+            <div class="col-md-9 col-xs-12 fs20">
+                Porque em tempos de "Dr. Google", a educação médica continuada se tornou obrigatória. Uma pesquisa feita entre os alunos da Cenbrap mostrou que a maior parte deles (67% da amostra) já são especialistas em alguma área, mas buscam um aprendizado contínuo e reconhecido pelo MEC, além de networking e preparação para provas de título de especialista.
+                <div class="pull-right margin-top-50"><a href="/Faq/" class="btn btn-lg btn-success">Saiba mais</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.workshop.Count > 0)
+{
+<div class="row Cursos">
+
+    <div class="container">
+
+    <h1 class="text-center">Workshops</h1>
+        <div class="flex-columns">
+        @foreach (var c in Model.workshop)
+        {
+            <div class="col-md-3 col-xs-12 curso text-center col-centered">
+                <a href="/Turma/@c.titulo1/" class="col-md-12 col-xs-12"><img src="~/Cursos/banner/@c.id/" /></a>
+                <a href="/Turma/@c.titulo1/" class="col-md-12 col-xs-12 margin-top">@c.titulo</a>
+            </div>
+        }
+        </div>
+        <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+            <a href="/Inscreva/Cidade/@Model.cidade.codigo" class="btn btn-pos curso-matricule-se-ja">Quero me matricular</a>
+        </div>
+    </div>
+</div>
+}
+
+@if (Model.ead.Count > 0)
+{
+<div class="row Cursos">
+
+    <div class="container">
+
+        <h1 class="text-center">EaD</h1>
+        <div class="flex-columns">
+        @foreach (var c in Model.ead)
+        {
+            <div class="col-md-3 col-xs-12 curso text-center col-centered">
+                <a href="/Turma/@c.titulo1/" class="col-md-12 col-xs-12"><img src="~/Cursos/banner/@c.id/" /></a>
+                <a href="/Turma/@c.titulo1/" class="col-md-12 col-xs-12 margin-top">@c.titulo</a>
+            </div>
+        }
+        </div>
+        <div class="col-md-12 col-xs-12 text-right espacamento-superior30">
+            <a href="/Inscreva/Cidade/@Model.cidade.codigo" class="btn btn-pos curso-matricule-se-ja">Quero me matricular</a>
+        </div>
+    </div>
+</div>
+}
+
+<div class="row ProximasTurmas espacamento-superior30">
+    <div class="container">
+        <h1>Matricule-se. Ainda dá tempo!</h1>
+
+    @if (Model.turmas.Count > 0)
+    {
+        <text>
+        @foreach (var t in Model.turmas)
+        {
+            <div class="col-md-4 col-xs-12 ProximasAulasTable">
+                <p>
+                    <br>
+                    <strong>@t.titulo</strong><br>
+                    @if (t.inicio_confirmado == 1)
+                    {
+                        <strong>Início confirmado: </strong>
+                    }
+                    else
+                    {
+                        <strong>Início previsto: </strong>
+                    }
+                    @t.data_inicio.ToShortDateString()
+                    <br>
+                    <a href="/Turma/@t.titulo1/" class="btn btn-primary">Saiba mais</a>
+                </p>
+            </div>
+        }
+        </text>
+    }
+    else
+    {
+        <div class="col-md-12 col-xs-12 ProximasAulasTable">
+            <p><br /><br /><strong>Não há nova(s) turma(s) com matrículas abertas nesse momento.</strong></p>
+        </div>
+    }
+        
+    </div>
+</div>
+
+<div class="Contato row">
+    <div class="container">
+        <div class="col-md-12 col-xs-12">
+
+            <div class="col-md-6 col-xs-12 text-center contato-esquerda">
+                <h1><span class="glyphicon glyphicon-earphone"></span><br />TEM ALGUMA DÚVIDA?</h1>
+                <p>Entramos em contato com você</p>
+            </div>
+
+            <div class="col-md-6 col-xs-12 form-horizontal contato-direita">
+                <input class="form-control" type="text" id="ContatoNome" placeholder="Nome" />
+                <input class="form-control" type="email" id="ContatoEmail" placeholder="E-mail" />
+                <input class="form-control" type="text" id="ContatoTelefone" placeholder="Telefone (XX)XXXXX-XXXX ou (XX)XXXX-XXXX" />
+                <textarea class="form-control" placeholder="Mensagem" id="ContatoMensagem"></textarea>
+                <button class="btn btn-ok" type="button" id="ContatoOk">ENVIAR</button>
+                <span id="ContatoErro"></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Cidade")
+}

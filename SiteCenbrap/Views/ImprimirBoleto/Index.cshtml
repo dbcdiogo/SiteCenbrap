@@ -1,0 +1,17 @@
+﻿@model Biblioteca.Entidades.Retorno
+
+@if (Model.erro)
+{
+    <div class="alert alert-danger">@Model.mensagem</div>
+    <script>
+        $(document).ready(function () {
+            window.setTimeout(function () {
+                window.location.href = "https://www.cenbrap.com.br";
+            }, 2000);
+        });
+    </script>
+}
+else
+{
+    <a class='btn btn-success btn-lg' href='@Model.link'>CLIQUE AQUI PARA VISUALIZAR O BOLETO</a>
+}

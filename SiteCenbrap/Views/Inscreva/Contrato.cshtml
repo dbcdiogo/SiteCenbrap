@@ -1,0 +1,96 @@
+﻿@model SiteCenbrap.Models.ContratoView
+@{
+    ViewBag.Title = "Contrato";
+}
+
+<div class="container margin-top-50">
+    <div class="row">
+        <h2>Curso</h2>
+        <p>@Model.curso.titulo</p>
+        <p>@Model.aluno.nome (@Model.aluno.cpf)</p>
+        @if (Model.curso.inicio_confirmado == 1)
+        {
+            <p>Início confirmado: @Model.curso.Data()</p>
+        }
+        else
+        {
+            <p>Início previsto: @Model.curso.Data()</p>
+        }
+        <p>Valor: R$ <span id="vl1">@Model.curso.CursoValor().ToString("N2")</span><span id="vl2" style="margin-left:10px; font-weight:600; color:green"></span></p>
+    </div>
+</div>
+<br />
+<div class="container">
+
+    @if (Model.curso.inicio_confirmado == 1)
+    {
+        <div class="contrato">@Html.Raw(Model.curso.ContratoC())</div>
+    }
+    else
+    {
+        <div class="contrato">@Html.Raw(Model.curso.Contrato())</div>
+    }
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 col-xs-12 text-center well termo">
+
+            <input type="checkbox" value="1" id="termo_aceite" />&nbsp;Li e estou de acordo com o <a href="#" onclick="showModalContrato(1)">Termo de Ciência e Compromisso</a> e com a <a href="#" onclick="showModalContrato(2)">Política de Privacidade</a>.
+        </div>
+    </div>
+</div>
+
+@if (Model.curso.tipo == 0)
+{
+<div class="container margin-top-20">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4">
+            <input name="cupomDesconto" class="form-control pull-left" type="text" id="cupomDesconto" placeholder="Cupom de Desconto *" value="" maxlength="10" style="height:46px; width:200px; margin-right:10px;" />
+            <button type="button" class="btn btn-success btn-lg" onclick="aplicarCupom()">APLICAR</button>
+            <input type="hidden" id="cupomDesconto_bool" name="cupomDesconto_bool" value="0" />
+            <input type="hidden" id="aluno_id" name="aluno_id" value="@Model.aluno.codigo" />
+            <span style="margin-left:10px;" id="resultadocupom">&nbsp;</span>
+            <br />
+            <div style="margin-top:10px;">* Exclusivo para recém-formados (até 90 dias).</div>
+        </div>
+    </div>
+    <div class="row margin-top-20 hide" id="dv_cupom">
+        <div class="col-md-8 col-md-offset-2 col-xs-12 text-center well termocupom">
+            <input type="checkbox" value="1" id="termo_cupom" />&nbsp;Li e estou de acordo com o <a href="#" onclick="showModalContrato(3)">Regulamento para utilização do cupom de Desconto</a>.
+</div>
+    </div>
+</div>
+}
+
+<div class="container margin-top-50">
+    <!--<div class="row">
+        <div class="col-md-8 col-md-offset-2 col-xs-12 text-center well">
+            Ao clicar em "GERAR BOLETO"
+            @if (Model.curso.cartao)
+            {
+                <span> ou "PAGAR COM CARTÃO" </span>
+            }
+            e prosseguir com a inscrição, declaro que li e aceito os Termos de Ciência e Compromisso acima.
+        </div>
+    </div>-->
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 col-xs-12 text-center" id="MsgLink">
+            @if (Model.curso.pagseguro_recorrente)
+            {
+                <button type="button" class="btn btn-success btn-lg" onclick="GerarPagseguro(@Model.aluno.codigo, @Model.curso.codigo);">PAGAR COM PAGSEGURO RECORRENTE &#10148;</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-success btn-lg" onclick="GerarBoleto(@Model.aluno.codigo, @Model.curso.codigo);">GERAR BOLETO &#10148;</button>
+                if (Model.curso.cartao)
+                {
+                    <button type="button" class="btn btn-success btn-lg" onclick="GerarCartao(@Model.aluno.codigo, @Model.curso.codigo);">PAGAR COM CARTÃO &#10148;</button>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Contrato")
+}

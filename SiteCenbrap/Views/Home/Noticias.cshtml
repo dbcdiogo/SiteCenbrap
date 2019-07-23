@@ -1,0 +1,22 @@
+﻿@model List<Biblioteca.Entidades.Noticia>
+@{
+    ViewBag.Title = "Notícias";
+}
+
+<div class="container margin-top-50">
+    <div class="row">
+
+        <h1>Notícias</h1>
+
+        <br /><br />
+
+        @foreach(var n in Model)
+        {
+            <p>
+                @n.titulo
+                <hr />
+            </p>
+        }
+
+    </div>
+</div>

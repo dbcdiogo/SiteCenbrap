@@ -1,0 +1,94 @@
+﻿@model SiteCenbrap.Models.ListBlogView
+
+@{
+    ViewBag.Title = "Blog";
+}
+
+<div class="container margin-top-50 blog">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+
+            <nav class="navbar navbar-inverse2">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        @foreach (var c in Model.categorias)
+                        {
+                            if (c != "")
+                            {
+                                <li><a href="#" onclick="mudaCategoria('@c')">@c</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+    <div class="row" style="border-bottom:1px solid #ececec; padding-bottom:30px;">
+        <div class="col-md-6 col-xs-12">
+            <h1>@ViewBag.nomecategoria</h1>@Model.blog.Count posts publicados
+        </div>
+        <div class="col-md-6 col-xs-12 text-right">
+            <input type="text" placeholder="Pesquisar..." class="form-control" id="busca" name="busca" value="@Model.busca" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9 col-xs-12">
+            @foreach (var b in Model.blog)
+            {
+                <div class="row noticia-blog">
+                    <div class="col-md-4 col-xs-12 text-left"><a href="~/Blog/@b.tituloUrl" class="titulo"><img src="http://www.cenbrap.com.br/Blog/Img/@b.blog_id" class="img-responsive"></a><br></div>
+                    <div class="col-md-8 col-xs-12 text-justify">
+                        <a href="~/Blog/@b.tituloUrl" class="titulo">@b.titulo</a><br />
+                        Por <span class="green">@b.autor</span> em <span class="green">@b.publicarEm.ToLongDateString()</span> @if (b.categoria != "")
+                        {
+                            @: - Categoria: <span class="green">@b.categoria</span>
+                        }
+                        <br /><br />
+                        <a href="~/Blog/@b.tituloUrl" class="resumo">@b.subtitulo</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="row margin-top-20">
+                <div class="col-md-12 col-xs-12">
+                    <label class="green">GARANTA SUA VAGA</label>
+                    <a href="http://www.congressomedicina.com.br/" target="_blank"><img src="~/Images/jb.jpg" class="img-responsive" /></a><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/Cursos/PreparatorioProvaTituloPsiquiatria/"><img src="~/Images/botao-ead-psiquiatria.png" class="img-responsive" /></a><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/Turma/EADPPTPS5/"><img src="~/Images/botao-psiquiatria.png" class="img-responsive" /></a><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/Turma/EADPPTPED1"><img src="~/Images/botao-pediatria.png" class="img-responsive" /></a><br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <a href="/cursos/posgraduacoes"><img src="~/Images/botao-pos.png" class="img-responsive" /></a><br />
+                    <a href="/cursos/workshops"><img src="~/Images/botao-workshop.png" class="img-responsive" /></a><br />
+                    <a href="/cursos/ead"><img src="~/Images/botao-ead.png" class="img-responsive" /></a>
+                </div>
+            </div>
+        </div>            
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/Blog")
+}
+
+
+
+
+
+
